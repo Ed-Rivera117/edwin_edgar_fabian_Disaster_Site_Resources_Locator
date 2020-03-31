@@ -2,9 +2,9 @@
 First off, the GitHub doesn`t have a lot of commits because we managed all the files using Microsoft Teams before we moved it GitHub.
 
 Team Members:
-Edwin X. Borrero Santiago
-Edgar J. Rivera Hernandez
-Fabian O. Guzman Aponte 
+ 1. Edwin X. Borrero Santiago
+ 2. Edgar J. Rivera Hernandez
+ 3. Fabian O. Guzman Aponte 
 
  Team Workload Division:
  1. Written Report: Edwin , Edgar and Fabian
