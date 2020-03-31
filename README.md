@@ -1,5 +1,5 @@
 # Disaster Site Resources Locator
-First off, the GitHub doesn`t have a lot of commits because we managed all the files using Microsoft Teams before we moved it GitHub.
+First off, the GitHub doesn't have a lot of commits because we managed all the files using Microsoft Teams before we moved it to GitHub.
 
 Team Members:
  1. Edwin X. Borrero Santiago
