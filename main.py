@@ -271,14 +271,14 @@ def getAllBatteries():
             return BatteriesHandler().searchBatteries(request.args)
 
 
-@app.route('/DBApp/batteries/<int:bat_id>', methods=['GET', 'PUT', 'DELETE'])
-def getBatteriesById(bat_id):
+@app.route('/DBApp/batteries/<int:batt_id>', methods=['GET', 'PUT', 'DELETE'])
+def getBatteriesById(batt_id):
     if request.method == 'GET':
-        return BatteriesHandler().getBatteriesById(bat_id)
+        return BatteriesHandler().getBatteriesById(batt_id)
     elif request.method == 'PUT':
-        return BatteriesHandler().updateBatteries(bat_id, request.form)
+        return BatteriesHandler().updateBatteries(batt_id, request.form)
     elif request.method == 'DELETE':
-        return BatteriesHandler().deleteBatteries(bat_id)
+        return BatteriesHandler().deleteBatteries(batt_id)
     else:
         return jsonify(Error="Method not allowed."), 405
 
@@ -547,14 +547,14 @@ def getAllWater():
             return WaterHandler().searchWater(request.args)
 
 
-@app.route('/DBApp/water/<int:h20_id>', methods=['GET', 'PUT', 'DELETE'])
-def getWaterById(h20_id):
+@app.route('/DBApp/water/<int:h2O_id>', methods=['GET', 'PUT', 'DELETE'])
+def getWaterById(h2O_id):
     if request.method == 'GET':
-        return WaterHandler().getWaterById(h20_id)
+        return WaterHandler().getWaterById(h2O_id)
     elif request.method == 'PUT':
-        return WaterHandler().updateWater(h20_id, request.form)
+        return WaterHandler().updateWater(h2O_id, request.form)
     elif request.method == 'DELETE':
-        return WaterHandler().deleteWater(h20_id)
+        return WaterHandler().deleteWater(h2O_id)
     else:
         return jsonify(Error="Method not allowed."), 405
 
