@@ -1,10 +1,10 @@
 --This File contains the definitions of the tables used in the application
 
---System Administrator
-create table sys_admin(sa_id serial primary key, sa_user varchar(20), sa_password varchar(20), usr_id integer references usr(usr_id));
-
 --User
 create table usr(usr_id serial primary key, usr_fname varchar(20), usr_lname varchar(20), usr_email varchar(20));
+
+--System Administrator
+create table sys_admin(sa_id serial primary key, sa_user varchar(20), sa_password varchar(20), usr_id integer references usr(usr_id));
 
 --User`s Phone
 create table phone(phone_id serial primary key, usr_id integer references usr(usr_id), usr_phone char(10));
@@ -72,6 +72,7 @@ create table batteries(batt_id serial primary key, batt_type varchar(20), resr_i
 
 --Administrate
 create table Administrate(sa_id integer references sys_admin(sa_id), usr_id integer references usr(usr_id), primary key (sa_id, usr_id));
+
 --Places
 create table Places(c_id integer references client(c_id), rq_id integer references request(rq_id), primary key(c_id,rq_id));
 
