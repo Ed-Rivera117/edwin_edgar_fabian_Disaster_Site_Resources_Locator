@@ -63,6 +63,18 @@ class ResourcesDAO:
             result.append(row)
         return result
 
+    def getResourcesRequested(self):
+        cursor = self.conn.cursor()
+        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Purchases natural inner join request " \
+                "UNION select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Confirmation natural inner join reservation;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
     def getResourcesBySupplier(self, s_id):
         cursor = self.conn.cursor()
         query = "select * from resources natural inner join Provides natural inner join supplier where s_id = %s;"

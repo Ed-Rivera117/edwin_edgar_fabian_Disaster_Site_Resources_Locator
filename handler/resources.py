@@ -38,6 +38,15 @@ class ResourcesHandler:
             sa = self.build_resr_dict(row)
         return jsonify(Resource=sa)
 
+    def getResourcesRequested(self):
+        dao = ResourcesDAO()
+        resr_list = dao.getResourcesRequested()
+        result_list = []
+        for row in resr_list:
+            result = self.build_resr_dict(row)
+            result_list.append(result)
+        return jsonify(Resource=result_list)
+
     def searchResource(self, args):
         if len(args) > 1:
             return jsonify(Error="Malformed search string"), 400
