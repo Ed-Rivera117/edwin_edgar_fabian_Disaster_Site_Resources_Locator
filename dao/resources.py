@@ -13,7 +13,7 @@ class ResourcesDAO:
 
     def getAllResources(self):
         cursor = self.conn.cursor()
-        query = "select resr_id, resr_price, resr_location, resr_category from resources;"
+        query = "select * from resources;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -22,7 +22,7 @@ class ResourcesDAO:
 
     def getResourcesById(self, resr_id):
         cursor = self.conn.cursor()
-        query = "select resr_id, resr_price, resr_location, resr_category from resources where resr_id = %s;"
+        query = "select * from resources where resr_id = %s;"
         cursor.execute(query, (resr_id,))
         result = cursor.fetchone()
         return result
@@ -47,7 +47,7 @@ class ResourcesDAO:
 
     def getResourcesByRequest(self, rq_id):
         cursor = self.conn.cursor()
-        query = "select * from Resources natural inner join Purchases natural inner join Request where rq_id = %s;"
+        query = "select * from resources natural inner join Purchases natural inner join request where rq_id = %s;"
         cursor.execute(query, (rq_id,))
         result = []
         for row in cursor:
@@ -56,7 +56,7 @@ class ResourcesDAO:
 
     def getResourcesByReservation(self, rs_id):
         cursor = self.conn.cursor()
-        query = "select * from Resources natural inner join Confirmation natural inner join Reservation where rs_id = %s;"
+        query = "select * from resources natural inner join Confirmation natural inner join reservation where rs_id = %s;"
         cursor.execute(query, (rs_id,))
         result = []
         for row in cursor:

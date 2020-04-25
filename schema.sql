@@ -27,7 +27,7 @@ create table request(rq_id serial primary key, rq_date varchar(20));
 create table reservation(rs_id serial primary key, rs_date varchar(20));
 
 --Resources
-create table resources(resr_id serial primary key, resr_price float, resr_location varchar(20), resr_category varchar(20));
+create table resources(resr_id serial primary key, resr_price float, resr_location varchar(20), resr_category varchar(20), stock integer);
 
 --Water
 create table water(h2O_id serial primary key, h2O_volume float, resr_id integer references resources(resr_id));
