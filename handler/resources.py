@@ -46,6 +46,15 @@ class ResourcesHandler:
             result = self.build_resr_dict(row)
             result_list.append(result)
         return jsonify(Resource=result_list)
+    
+    def getResourcesAvailable(self):
+        dao = ResourcesDAO()
+        resr_list = dao.getResourcesAvailable()
+        result_list = []
+        for row in resr_list:
+            result = self.build_resr_dict(row)
+            result_list.append(result)
+        return jsonify(Resource=result_list)
 
     def searchResource(self, args):
         if len(args) > 1:
