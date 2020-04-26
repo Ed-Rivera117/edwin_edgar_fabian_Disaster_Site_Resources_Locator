@@ -74,6 +74,20 @@ class ResourcesDAO:
         for row in cursor:
             result.append(row)
         return result
+    
+    def getResourcesAvailable(self): #new
+        cursor = self.conn.cursor()
+        query = "(select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources " \
+                "where stock > 0 )" \
+                "except" \
+                "(select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Purchases natural inner join request );"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def getResourcesBySupplier(self, s_id):
         cursor = self.conn.cursor()
