@@ -212,6 +212,9 @@ def getResourcesById(resr_id):
 def getResourcesRequested():
     return ResourcesHandler().getResourcesRequested()
 
+@app.route('/DBApp/available', methods=['GET'])
+def getResourcesAvailable():
+    return ResourcesHandler().getResourcesAvailable()
 
 # CreditCard
 @app.route('/DBApp/creditcards', methods=['GET', 'POST'])
