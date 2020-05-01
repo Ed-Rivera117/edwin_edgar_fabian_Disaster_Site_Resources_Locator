@@ -48,6 +48,15 @@ class ResourcesHandler:
             result = self.build_resr_dict(row)
             result_list.append(result)
         return jsonify(Resource=result_list)
+
+    def getResourcesReserved(self):
+        dao = ResourcesDAO()
+        resr_list = dao.getResourcesReserved()
+        result_list = []
+        for row in resr_list:
+            result = self.build_resr_dict(row)
+            result_list.append(result)
+        return jsonify(Resource=result_list)
     
     def getResourcesAvailable(self):
         dao = ResourcesDAO()
@@ -64,6 +73,9 @@ class ResourcesHandler:
         else:
             location = args.get("location")
             category = args.get("category")
+            requested = args.get("requested")
+            reserved = args.get("reserved")
+            available = args.get("available")
             if location:
                 dao = ResourcesDAO()
                 resr_list = dao.getResourceByLocation(location)
@@ -75,6 +87,30 @@ class ResourcesHandler:
             elif category:
                 dao = ResourcesDAO()
                 resr_list = dao.getResourceByLocation(category)
+                result_list = []
+                for row in resr_list:
+                    result = self.build_resr_dict(row)
+                    result_list.append(result)
+                return jsonify(Resource=result_list)
+            elif requested:
+                dao = ResourcesDAO()
+                resr_list = dao.getResourcesRequestedOrd()
+                result_list = []
+                for row in resr_list:
+                    result = self.build_resr_dict(row)
+                    result_list.append(result)
+                return jsonify(Resource=result_list)
+            elif reserved:
+                dao = ResourcesDAO()
+                resr_list = dao.getResourcesReservedOrd()
+                result_list = []
+                for row in resr_list:
+                    result = self.build_resr_dict(row)
+                    result_list.append(result)
+                return jsonify(Resource=result_list)
+            elif available:
+                dao = ResourcesDAO()
+                resr_list = dao.getResourcesAvailableOrd()
                 result_list = []
                 for row in resr_list:
                     result = self.build_resr_dict(row)

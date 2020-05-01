@@ -66,15 +66,45 @@ class ResourcesDAO:
     def getResourcesRequested(self):
         cursor = self.conn.cursor()
         query = "select resr_id, resr_price, resr_location, resr_category, stock " \
-                "from resources natural inner join Purchases natural inner join request " \
-                "UNION select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Purchases natural inner join request;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getResourcesReserved(self):
+        cursor = self.conn.cursor()
+        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
                 "from resources natural inner join Confirmation natural inner join reservation;"
         cursor.execute(query)
         result = []
         for row in cursor:
             result.append(row)
         return result
-    
+
+    def getResourcesRequestedOrd(self):
+        cursor = self.conn.cursor()
+        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Purchases natural inner join request" \
+                "order by resr_category;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getResourcesReservedOrd(self):
+        cursor = self.conn.cursor()
+        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Confirmation natural inner join reservation" \
+                "order by resr_category;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
     def getResourcesAvailable(self):
         cursor = self.conn.cursor()
         query = "(select resr_id, resr_price, resr_location, resr_category, stock " \
@@ -82,7 +112,26 @@ class ResourcesDAO:
                 "where stock > 0)" \
                 "except" \
                 "(select resr_id, resr_price, resr_location, resr_category, stock " \
-                "from resources natural inner join Purchases natural inner join request);"
+                "from resources natural inner join Purchases natural inner join request" \
+                "UNION select resr_id, resr_price, resr_location, resr_category, stock" \
+                "from resources natural inner join Confirmation natural inner join reservation);"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getResourcesAvailableOrd(self):
+        cursor = self.conn.cursor()
+        query = "(select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources " \
+                "where stock > 0)" \
+                "except" \
+                "(select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Purchases natural inner join request" \
+                "UNION select resr_id, resr_price, resr_location, resr_category, stock" \
+                "from resources natural inner join Confirmation natural inner join reservation)" \
+                "order by resr_category;"
         cursor.execute(query)
         result = []
         for row in cursor:

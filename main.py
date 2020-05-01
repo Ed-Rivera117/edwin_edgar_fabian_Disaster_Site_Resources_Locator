@@ -210,12 +210,26 @@ def getResourcesById(resr_id):
 
 @app.route('/DBApp/resources/requested', methods=['GET'])
 def getResourcesRequested():
-    return ResourcesHandler().getResourcesRequested()
+    if not request.args:
+        return ResourcesHandler().getResourcesRequested()
+    else:
+        return ResourcesHandler().searchResource(request.args)
+
+
+@app.route('/DBApp/resources/reserved', methods=['GET'])
+def getResourcesReserved():
+    if not request.args:
+        return ResourcesHandler().getResourcesReserved()
+    else:
+        return ResourcesHandler().searchResource(request.args)
 
 
 @app.route('/DBApp/resources/available', methods=['GET'])
 def getResourcesAvailable():
-    return ResourcesHandler().getResourcesAvailable()
+    if not request.args:
+        return ResourcesHandler().getResourcesAvailable()
+    else:
+        return ResourcesHandler().searchResource(request.args)
 
 
 # CreditCard
