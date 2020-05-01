@@ -75,14 +75,14 @@ class ResourcesDAO:
             result.append(row)
         return result
     
-    def getResourcesAvailable(self): #new
+    def getResourcesAvailable(self):
         cursor = self.conn.cursor()
         query = "(select resr_id, resr_price, resr_location, resr_category, stock " \
                 "from resources " \
-                "where stock > 0 )" \
+                "where stock > 0)" \
                 "except" \
                 "(select resr_id, resr_price, resr_location, resr_category, stock " \
-                "from resources natural inner join Purchases natural inner join request );"
+                "from resources natural inner join Purchases natural inner join request);"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -107,10 +107,10 @@ class ResourcesDAO:
             result.append(row)
         return result
 
-    def insert(self, resr_price, resr_location, resr_category):
+    def insert(self, resr_price, resr_location, resr_category, stock):
         cursor = self.conn.cursor()
-        query = "insert into resources(resr_price, resr_location, resr_category) values (%s, %s, %s) returning resr_id;"
-        cursor.execute(query, (resr_price, resr_location, resr_category,))
+        query = "insert into resources(resr_price, resr_location, resr_category, stock) values (%s, %s, %s, %s) returning resr_id;"
+        cursor.execute(query, (resr_price, resr_location, resr_category, stock))
         resrid = cursor.fetchone()[0]
         self.conn.commit()
         return resrid

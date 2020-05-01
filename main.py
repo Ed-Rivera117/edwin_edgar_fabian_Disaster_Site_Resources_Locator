@@ -208,13 +208,15 @@ def getResourcesById(resr_id):
         return jsonify(Error="Method not allowed."), 405
 
 
-@app.route('/DBApp/requested', methods=['GET'])
+@app.route('/DBApp/resources/requested', methods=['GET'])
 def getResourcesRequested():
     return ResourcesHandler().getResourcesRequested()
 
-@app.route('/DBApp/available', methods=['GET'])
+
+@app.route('/DBApp/resources/available', methods=['GET'])
 def getResourcesAvailable():
     return ResourcesHandler().getResourcesAvailable()
+
 
 # CreditCard
 @app.route('/DBApp/creditcards', methods=['GET', 'POST'])

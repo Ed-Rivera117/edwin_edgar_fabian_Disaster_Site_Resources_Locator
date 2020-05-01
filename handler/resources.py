@@ -10,14 +10,16 @@ class ResourcesHandler:
         result['resr_price'] = row[1]
         result['resr_location'] = row[2]
         result['resr_category'] = row[3]
+        result['stock'] = row[4]
         return result
 
-    def build_resr_attr(self, resr_id, resr_price, resr_location, resr_category):
+    def build_resr_attr(self, resr_id, resr_price, resr_location, resr_category, stock):
         result = {}
         result['resr_id'] = resr_id
         result['resr_price'] = resr_price
         result['resr_location'] = resr_location
         result['resr_category'] = resr_category
+        result['stock'] = stock
         return result
 
     def getAllResource(self):
@@ -82,14 +84,15 @@ class ResourcesHandler:
                 return jsonify(Error="Malformed search string"), 400
 
     def insertResource(self, form):
-        if form and len(form) == 3:
+        if form and len(form) == 4:
             resr_price = form['resr_price']
             resr_location = form['resr_location']
             resr_category = form['resr_category']
-            if resr_price and resr_location and resr_category:
+            stock = form['stock']
+            if resr_price and resr_location and resr_category and stock:
                 dao = ResourcesDAO()
-                resr_id = dao.insert(resr_price, resr_location, resr_category)
-                result = self.build_resr_attr(resr_id, resr_price, resr_location, resr_category)
+                resr_id = dao.insert(resr_price, resr_location, resr_category, stock)
+                result = self.build_resr_attr(resr_id, resr_price, resr_location, resr_category, stock)
                 return jsonify(Resource=result), 201
             else:
                 return jsonify(Error="Malformed post request"), 400
