@@ -34,6 +34,7 @@ def greeting():
     return 'Hello this is Edwin, Edgar and Fabian`s DB App!'
 
 
+#Users
 @app.route('/DBApp/users', methods=['GET', 'POST'])
 def getAllUsr():
     if request.method == 'POST':
@@ -216,12 +217,22 @@ def getResourcesRequested():
         return ResourcesHandler().searchResource(request.args)
 
 
+@app.route('/DBApp/resources/requested/<int:rq_id>', methods=['GET'])
+def getResourcesRequestedById(rq_id):
+    return ResourcesHandler().getResourceByRequestId(rq_id)
+
+
 @app.route('/DBApp/resources/reserved', methods=['GET'])
 def getResourcesReserved():
     if not request.args:
         return ResourcesHandler().getResourcesReserved()
     else:
         return ResourcesHandler().searchResource(request.args)
+
+
+@app.route('/DBApp/resources/reserved/<int:rs_id>', methods=['GET'])
+def getResourcesReservedById(rs_id):
+    return ResourcesHandler().getResourceByReservationId(rs_id)
 
 
 @app.route('/DBApp/resources/available', methods=['GET'])
