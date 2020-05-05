@@ -36,15 +36,12 @@ class RequestHandler:
 
     def getRequestByUsrId(self, usr_id):
         dao = RequestDAO()
-        rq_list = dao.getRequestByUsrId(usr_id)
-        result_list = []
-        if not rq_list:
+        row = dao.getRequestByUsrId(usr_id)
+        if not row:
             return jsonify(Error="Request not found"), 404
-        for row in rq_list:
-            result = self.build_rq_dict(row)
-            result_list.append(result)
-        return jsonify(Request=result_list)
-
+        else:
+            rq = self.build_rq_dict(row)
+        return jsonify(Request=row)
 
     def searchRequest(self, args):
         if len(args) > 1:
