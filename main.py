@@ -134,7 +134,7 @@ def getSysAdminById(sa_id):
 
 
 # Request
-@app.route('/DBApp/request', methods=['GET', 'POST'])
+@app.route('/DBApp/requests', methods=['GET', 'POST'])
 def getAllRequest():
     if request.method == 'POST':
         print("REQUEST: ", request.json)
@@ -154,6 +154,15 @@ def getRequestById(rq_id):
         return RequestHandler().updateRequest(rq_id, request.form)
     elif request.method == 'DELETE':
         return RequestHandler().deleteRequest(rq_id)
+    else:
+        return jsonify(Error="Method not allowed."), 405
+
+
+@app.route('/DBApp/requests/users/<int:usr_id>', methods=['GET'])
+def getRequestByUsrId(usr_id):
+    if request.method == 'GET':
+        return RequestHandler().getRequestByUsrId(usr_id)
+
     else:
         return jsonify(Error="Method not allowed."), 405
 
@@ -207,7 +216,6 @@ def getResourcesById(resr_id):
     else:
         return jsonify(Error="Method not allowed."), 405
 
-
 @app.route('/DBApp/resources/requested', methods=['GET'])
 def getResourcesRequested():
     if not request.args:
@@ -241,10 +249,13 @@ def getResourcesAvailable():
     else:
         return ResourcesHandler().searchAvailable(request.args)
 
-
 @app.route('/DBApp/resources/supplier/<int:s_id>', methods=['GET'])
 def getResourcesBySupplierId(s_id):
     return ResourcesHandler().getResourceBySupplierId(s_id)
+
+@app.route('/DBApp/purchases/users/<int:usr_id>', methods=['GET'])
+def getPurchasesByUsrId(usr_id):
+    return ResourcesHandler().getPurchasesByUsrId(usr_id)
 
 
 # CreditCard
