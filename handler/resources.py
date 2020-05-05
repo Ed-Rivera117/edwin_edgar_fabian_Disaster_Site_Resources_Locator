@@ -40,23 +40,32 @@ class ResourcesHandler:
             sa = self.build_resr_dict(row)
         return jsonify(Resource=sa)
 
-    def getResourceByRequestId(self, rq_id):
+       def getResourceByRequestId(self, rq_id):
         dao = ResourcesDAO()
-        row = dao.getResourcesByRequest(rq_id)
-        if not row:
-            return jsonify(Error="Resource not found"), 404
-        else:
-            sa = self.build_resr_dict(row)
-        return jsonify(Resource=sa)
+        resr_list = dao.getResourcesByRequest(rq_id)
+        result_list = []
+        if not resr_list:
+                return jsonify(Error = "Resource not found"), 404
+        for row in resr_list:
+            result = self.build_resr_dict(row)
+            result_list.append(result)
+        return jsonify(Resource=result_list)
+        #if not row:
+         #   return jsonify(Error="Resource not found"), 404
+        #else:
+         #   sa = self.build_resr_dict(row)
+       # return jsonify(Resource=sa)
 
     def getResourceByReservationId(self, rs_id):
         dao = ResourcesDAO()
-        row = dao.getResourcesByReservation(rs_id)
-        if not row:
+        resr_list = dao.getResourcesByReservation(rs_id)
+        result_list = []
+        if not resr_list:
             return jsonify(Error="Resource not found"), 404
-        else:
-            sa = self.build_resr_dict(row)
-        return jsonify(Resource=sa)
+        for row in resr_list:
+            result = self.build_resr_dict(row)
+            result_list.append(result)
+        return jsonify(Resource=result_list)
 
     def getResourcesRequested(self):
         dao = ResourcesDAO()
