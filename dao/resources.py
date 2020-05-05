@@ -36,6 +36,17 @@ class ResourcesDAO:
             result.append(row)
         return result
 
+    def getResourceRequestedByLocation(self, resr_location):
+        cursor = self.conn.cursor()
+        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Purchases natural inner join request " \
+                "where resr_location = %s;"
+        cursor.execute(query, (resr_location,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
     def getResourceReservedByLocation(self, resr_location):
         cursor = self.conn.cursor()
         query = "select resr_id, resr_price, resr_location, resr_category, stock " \
@@ -65,6 +76,17 @@ class ResourcesDAO:
     def getResourceByCategory(self, resr_category):
         cursor = self.conn.cursor()
         query = "select * from resources where resr_category = %s;"
+        cursor.execute(query, (resr_category,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getResourceRequestedByCategory(self, resr_category):
+        cursor = self.conn.cursor()
+        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Purchases natural inner join request " \
+                "where resr_category = %s;"
         cursor.execute(query, (resr_category,))
         result = []
         for row in cursor:
@@ -138,28 +160,6 @@ class ResourcesDAO:
             result.append(row)
         return result
 
-    def getResourcesRequestedOrd(self):
-        cursor = self.conn.cursor()
-        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
-                "from resources natural inner join Purchases natural inner join request " \
-                "order by resr_category;"
-        cursor.execute(query)
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
-
-    def getResourcesReservedOrd(self):
-        cursor = self.conn.cursor()
-        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
-                "from resources natural inner join Confirmation natural inner join reservation " \
-                "order by resr_category;"
-        cursor.execute(query)
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
-
     def getResourcesAvailable(self):
         cursor = self.conn.cursor()
         query = "select resr_id, resr_price, resr_location, resr_category, stock " \
@@ -169,22 +169,6 @@ class ResourcesDAO:
                 "from resources natural inner join Purchases natural inner join request " \
                 "except select resr_id, resr_price, resr_location, resr_category, stock " \
                 "from resources natural inner join Confirmation natural inner join reservation;"
-        cursor.execute(query)
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
-
-    def getResourcesAvailableOrd(self):
-        cursor = self.conn.cursor()
-        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
-                "from resources " \
-                "where stock > 0 " \
-                "except select resr_id, resr_price, resr_location, resr_category, stock " \
-                "from resources natural inner join Purchases natural inner join request " \
-                "except select resr_id, resr_price, resr_location, resr_category, stock " \
-                "from resources natural inner join Confirmation natural inner join reservation" \
-                "order by resr_category;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -224,9 +208,9 @@ class ResourcesDAO:
         self.conn.commit()
         return resr_id
 
-    def update(self, resr_id, resr_price, resr_location, resr_category):
+    def update(self, resr_id, resr_price, resr_location, resr_category, stock):
         cursor = self.conn.cursor()
-        query = "update resources set resr_price = %s, resr_location = %s, resr_category = %s where resr_id = %s;"
-        cursor.execute(query, (resr_id, resr_price, resr_location, resr_category,))
+        query = "update resources set resr_price = %s, resr_location = %s, resr_category = %s, stock = %s where resr_id = %s;"
+        cursor.execute(query, (resr_id, resr_price, resr_location, resr_category, stock))
         self.conn.commit()
         return resr_id

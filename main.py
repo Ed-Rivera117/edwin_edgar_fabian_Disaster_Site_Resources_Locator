@@ -207,12 +207,13 @@ def getResourcesById(resr_id):
     else:
         return jsonify(Error="Method not allowed."), 405
 
+
 @app.route('/DBApp/resources/requested', methods=['GET'])
 def getResourcesRequested():
     if not request.args:
         return ResourcesHandler().getResourcesRequested()
     else:
-        return ResourcesHandler().searchResource(request.args)
+        return ResourcesHandler().searchRequested(request.args)
 
 
 @app.route('/DBApp/resources/requested/<int:rq_id>', methods=['GET'])
@@ -225,7 +226,7 @@ def getResourcesReserved():
     if not request.args:
         return ResourcesHandler().getResourcesReserved()
     else:
-        return ResourcesHandler().searchResource(request.args)
+        return ResourcesHandler().searchReserved(request.args)
 
 
 @app.route('/DBApp/resources/reserved/<int:rs_id>', methods=['GET'])
@@ -240,9 +241,11 @@ def getResourcesAvailable():
     else:
         return ResourcesHandler().searchAvailable(request.args)
 
+
 @app.route('/DBApp/resources/supplier/<int:s_id>', methods=['GET'])
-def getReasourcesBySupplierId(s_id):
+def getResourcesBySupplierId(s_id):
     return ResourcesHandler().getResourceBySupplierId(s_id)
+
 
 # CreditCard
 @app.route('/DBApp/creditcards', methods=['GET', 'POST'])

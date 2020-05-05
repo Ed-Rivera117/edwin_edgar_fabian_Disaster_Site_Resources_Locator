@@ -44,16 +44,11 @@ class ResourcesHandler:
         resr_list = dao.getResourcesByRequest(rq_id)
         result_list = []
         if not resr_list:
-                return jsonify(Error = "Resource not found"), 404
+            return jsonify(Error="Resource not found"), 404
         for row in resr_list:
             result = self.build_resr_dict(row)
             result_list.append(result)
         return jsonify(Resource=result_list)
-        #if not row:
-         #   return jsonify(Error="Resource not found"), 404
-        #else:
-         #   sa = self.build_resr_dict(row)
-       # return jsonify(Resource=sa)
 
     def getResourceByReservationId(self, rs_id):
         dao = ResourcesDAO()
@@ -65,11 +60,6 @@ class ResourcesHandler:
             result = self.build_resr_dict(row)
             result_list.append(result)
         return jsonify(Resource=result_list)
-        #if not row:
-         #   return jsonify(Error="Resource not found"), 404
-        #else:
-         #   sa = self.build_resr_dict(row)
-        #return jsonify(Resource=sa)
 
     def getResourceBySupplierId(self, s_id):
         dao = ResourcesDAO()
@@ -109,7 +99,7 @@ class ResourcesHandler:
             result_list.append(result)
         return jsonify(Resource=result_list)
 
-    def searchAvailable(self,args):
+    def searchResource(self, args):
         if len(args) > 1:
             return jsonify(Error="Malformed search string"), 400
         else:
@@ -117,7 +107,7 @@ class ResourcesHandler:
             category = args.get("category")
             if location:
                 dao = ResourcesDAO()
-                resr_list = dao.getResourceAvailableByLocation(location)
+                resr_list = dao.getResourceByLocation(location)
                 result_list = []
                 for row in resr_list:
                     result = self.build_resr_dict(row)
@@ -125,23 +115,46 @@ class ResourcesHandler:
                 return jsonify(Resource=result_list)
             elif category:
                 dao = ResourcesDAO()
-                resr_list = dao.getResourceAvailableByCategory(category)
+                resr_list = dao.getResourceByCategory(category)
                 result_list = []
                 for row in resr_list:
                     result = self.build_resr_dict(row)
                     result_list.append(result)
                 return jsonify(Resource=result_list)
+            else:
+                return jsonify(Error="Malformed search string"), 400
 
-
-    def searchResource(self, args):
+    def searchRequested(self, args):
         if len(args) > 1:
             return jsonify(Error="Malformed search string"), 400
         else:
             location = args.get("location")
             category = args.get("category")
-            requested = args.get("requested")
-            reserved = args.get("reserved")
-            available = args.get("available")
+            if location:
+                dao = ResourcesDAO()
+                resr_list = dao.getResourceRequestedByLocation(location)
+                result_list = []
+                for row in resr_list:
+                    result = self.build_resr_dict(row)
+                    result_list.append(result)
+                return jsonify(Resource=result_list)
+            elif category:
+                dao = ResourcesDAO()
+                resr_list = dao.getResourceRequestedByCategory(category)
+                result_list = []
+                for row in resr_list:
+                    result = self.build_resr_dict(row)
+                    result_list.append(result)
+                return jsonify(Resource=result_list)
+            else:
+                return jsonify(Error="Malformed search string"), 400
+
+    def searchReserved(self, args):
+        if len(args) > 1:
+            return jsonify(Error="Malformed search string"), 400
+        else:
+            location = args.get("location")
+            category = args.get("category")
             if location:
                 dao = ResourcesDAO()
                 resr_list = dao.getResourceReservedByLocation(location)
@@ -158,25 +171,26 @@ class ResourcesHandler:
                     result = self.build_resr_dict(row)
                     result_list.append(result)
                 return jsonify(Resource=result_list)
-            elif requested:
+            else:
+                return jsonify(Error="Malformed search string"), 400
+
+    def searchAvailable(self, args):
+        if len(args) > 1:
+            return jsonify(Error="Malformed search string"), 400
+        else:
+            location = args.get("location")
+            category = args.get("category")
+            if location:
                 dao = ResourcesDAO()
-                resr_list = dao.getResourcesRequestedOrd()
+                resr_list = dao.getResourceAvailableByLocation(location)
                 result_list = []
                 for row in resr_list:
                     result = self.build_resr_dict(row)
                     result_list.append(result)
                 return jsonify(Resource=result_list)
-            elif reserved:
+            elif category:
                 dao = ResourcesDAO()
-                resr_list = dao.getResourcesReservedOrd()
-                result_list = []
-                for row in resr_list:
-                    result = self.build_resr_dict(row)
-                    result_list.append(result)
-                return jsonify(Resource=result_list)
-            elif available:
-                dao = ResourcesDAO()
-                resr_list = dao.getResourcesAvailableOrd()
+                resr_list = dao.getResourceAvailableByCategory(category)
                 result_list = []
                 for row in resr_list:
                     result = self.build_resr_dict(row)
@@ -220,10 +234,10 @@ class ResourcesHandler:
                 resr_price = form['resr_price']
                 resr_location = form['resr_location']
                 resr_category = form['resr_category']
+                stock = form['stock']
                 if resr_price and resr_location:
                     dao.update(resr_id, resr_price, resr_location, resr_category)
-                    result = self.build_resr_attr(resr_id, resr_price, resr_location, resr_category)
+                    result = self.build_resr_attr(resr_id, resr_price, resr_location, resr_category, stock)
                     return jsonify(Resource=result), 200
                 else:
                     return jsonify(Error="Unexpected attributes in update request"), 400
-
