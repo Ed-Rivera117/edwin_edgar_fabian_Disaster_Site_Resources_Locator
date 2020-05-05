@@ -177,7 +177,8 @@ class ResourcesDAO:
 
     def getResourcesBySupplier(self, s_id):
         cursor = self.conn.cursor()
-        query = "select * from resources natural inner join Provides natural inner join supplier where s_id = %s;"
+        query = "select resr_id, resr_price, resr_location, resr_category, stock "\
+                "from resources natural inner join Provides natural inner join supplier where s_id = %s;"
         cursor.execute(query, (s_id,))
         result = []
         for row in cursor:
