@@ -1,0 +1,2860 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.12 (Ubuntu 10.12-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.12 (Ubuntu 10.12-0ubuntu0.18.04.1)
+
+-- Started on 2020-05-05 19:58:20 AST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 13041)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 3254 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 244 (class 1259 OID 41240)
+-- Name: administrate; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.administrate (
+    sa_id integer NOT NULL,
+    usr_id integer NOT NULL
+);
+
+
+ALTER TABLE public.administrate OWNER TO appusr;
+
+--
+-- TOC entry 223 (class 1259 OID 41098)
+-- Name: babyfood; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.babyfood (
+    bb_id integer NOT NULL,
+    bb_expdate character varying(20),
+    bb_flavor character varying(20),
+    resr_id integer
+);
+
+
+ALTER TABLE public.babyfood OWNER TO appusr;
+
+--
+-- TOC entry 222 (class 1259 OID 41096)
+-- Name: babyfood_bb_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.babyfood_bb_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.babyfood_bb_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3255 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: babyfood_bb_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.babyfood_bb_id_seq OWNED BY public.babyfood.bb_id;
+
+
+--
+-- TOC entry 243 (class 1259 OID 41229)
+-- Name: batteries; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.batteries (
+    batt_id integer NOT NULL,
+    batt_type character varying(20),
+    resr_id integer
+);
+
+
+ALTER TABLE public.batteries OWNER TO appusr;
+
+--
+-- TOC entry 242 (class 1259 OID 41227)
+-- Name: batteries_bat_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.batteries_bat_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.batteries_bat_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3256 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: batteries_bat_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.batteries_bat_id_seq OWNED BY public.batteries.batt_id;
+
+
+--
+-- TOC entry 225 (class 1259 OID 41111)
+-- Name: cannedfood; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.cannedfood (
+    cf_id integer NOT NULL,
+    cf_expdate character varying(20),
+    cf_name character varying(20),
+    resr_id integer
+);
+
+
+ALTER TABLE public.cannedfood OWNER TO appusr;
+
+--
+-- TOC entry 224 (class 1259 OID 41109)
+-- Name: cannedfood_cf_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.cannedfood_cf_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cannedfood_cf_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3257 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: cannedfood_cf_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.cannedfood_cf_id_seq OWNED BY public.cannedfood.cf_id;
+
+
+--
+-- TOC entry 205 (class 1259 OID 40988)
+-- Name: client; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.client (
+    c_id integer NOT NULL,
+    c_usr character varying(20),
+    c_password character varying(20),
+    usr_id integer
+);
+
+
+ALTER TABLE public.client OWNER TO appusr;
+
+--
+-- TOC entry 204 (class 1259 OID 40986)
+-- Name: client_c_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.client_c_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.client_c_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3258 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: client_c_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.client_c_id_seq OWNED BY public.client.c_id;
+
+
+--
+-- TOC entry 239 (class 1259 OID 41203)
+-- Name: clothing; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.clothing (
+    cl_id integer NOT NULL,
+    cl_size character varying(20),
+    cl_color character varying(20),
+    cl_material character varying(20),
+    resr_id integer
+);
+
+
+ALTER TABLE public.clothing OWNER TO appusr;
+
+--
+-- TOC entry 238 (class 1259 OID 41201)
+-- Name: clothing_cl_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.clothing_cl_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.clothing_cl_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3259 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: clothing_cl_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.clothing_cl_id_seq OWNED BY public.clothing.cl_id;
+
+
+--
+-- TOC entry 249 (class 1259 OID 41345)
+-- Name: confirmation; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.confirmation (
+    rs_id integer NOT NULL,
+    resr_id integer NOT NULL,
+    confirmation_status character varying(20),
+    quantity integer
+);
+
+
+ALTER TABLE public.confirmation OWNER TO appusr;
+
+--
+-- TOC entry 209 (class 1259 OID 41014)
+-- Name: creditcard; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.creditcard (
+    cc_id integer NOT NULL,
+    cc_nameoncard character varying(20),
+    cc_expdate character varying(20),
+    cc_cvc integer,
+    c_id integer
+);
+
+
+ALTER TABLE public.creditcard OWNER TO appusr;
+
+--
+-- TOC entry 208 (class 1259 OID 41012)
+-- Name: creditcard_cc_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.creditcard_cc_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.creditcard_cc_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3260 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: creditcard_cc_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.creditcard_cc_id_seq OWNED BY public.creditcard.cc_id;
+
+
+--
+-- TOC entry 211 (class 1259 OID 41035)
+-- Name: creditcardnumber; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.creditcardnumber (
+    cc_number_id integer NOT NULL,
+    cc_id integer,
+    cc_number character varying(30)
+);
+
+
+ALTER TABLE public.creditcardnumber OWNER TO appusr;
+
+--
+-- TOC entry 210 (class 1259 OID 41033)
+-- Name: creditcardnumber_cc_number_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.creditcardnumber_cc_number_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.creditcardnumber_cc_number_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3261 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: creditcardnumber_cc_number_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.creditcardnumber_cc_number_id_seq OWNED BY public.creditcardnumber.cc_number_id;
+
+
+--
+-- TOC entry 227 (class 1259 OID 41124)
+-- Name: dryfood; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.dryfood (
+    df_id integer NOT NULL,
+    df_expdate character varying(20),
+    df_name character varying(20),
+    resr_id integer
+);
+
+
+ALTER TABLE public.dryfood OWNER TO appusr;
+
+--
+-- TOC entry 226 (class 1259 OID 41122)
+-- Name: dryfood_df_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.dryfood_df_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dryfood_df_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3262 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: dryfood_df_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.dryfood_df_id_seq OWNED BY public.dryfood.df_id;
+
+
+--
+-- TOC entry 231 (class 1259 OID 41150)
+-- Name: fuel; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.fuel (
+    fuel_id integer NOT NULL,
+    fuel_type character varying(20),
+    resr_id integer
+);
+
+
+ALTER TABLE public.fuel OWNER TO appusr;
+
+--
+-- TOC entry 230 (class 1259 OID 41148)
+-- Name: fuel_fuel_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.fuel_fuel_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.fuel_fuel_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3263 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: fuel_fuel_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.fuel_fuel_id_seq OWNED BY public.fuel.fuel_id;
+
+
+--
+-- TOC entry 235 (class 1259 OID 41177)
+-- Name: heavyequip; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.heavyequip (
+    heq_id integer NOT NULL,
+    heq_type character varying(20),
+    resr_id integer
+);
+
+
+ALTER TABLE public.heavyequip OWNER TO appusr;
+
+--
+-- TOC entry 234 (class 1259 OID 41175)
+-- Name: heavyequip_heq_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.heavyequip_heq_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.heavyequip_heq_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3264 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: heavyequip_heq_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.heavyequip_heq_id_seq OWNED BY public.heavyequip.heq_id;
+
+
+--
+-- TOC entry 229 (class 1259 OID 41137)
+-- Name: ice; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.ice (
+    ice_id integer NOT NULL,
+    ice_bagsize character varying(20),
+    resr_id integer
+);
+
+
+ALTER TABLE public.ice OWNER TO appusr;
+
+--
+-- TOC entry 228 (class 1259 OID 41135)
+-- Name: ice_ice_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.ice_ice_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.ice_ice_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3265 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: ice_ice_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.ice_ice_id_seq OWNED BY public.ice.ice_id;
+
+
+--
+-- TOC entry 246 (class 1259 OID 41300)
+-- Name: makes; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.makes (
+    c_id integer NOT NULL,
+    rs_id integer NOT NULL
+);
+
+
+ALTER TABLE public.makes OWNER TO appusr;
+
+--
+-- TOC entry 233 (class 1259 OID 41164)
+-- Name: medicaldevices; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.medicaldevices (
+    mdev_id integer NOT NULL,
+    mdev_name character varying(20),
+    mdev_description character varying(50),
+    resr_id integer
+);
+
+
+ALTER TABLE public.medicaldevices OWNER TO appusr;
+
+--
+-- TOC entry 232 (class 1259 OID 41162)
+-- Name: medicaldevices_mdev_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.medicaldevices_mdev_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.medicaldevices_mdev_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3266 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: medicaldevices_mdev_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.medicaldevices_mdev_id_seq OWNED BY public.medicaldevices.mdev_id;
+
+
+--
+-- TOC entry 221 (class 1259 OID 41085)
+-- Name: medicine; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.medicine (
+    med_id integer NOT NULL,
+    med_name character varying(20),
+    resr_id integer
+);
+
+
+ALTER TABLE public.medicine OWNER TO appusr;
+
+--
+-- TOC entry 220 (class 1259 OID 41083)
+-- Name: medicine_med_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.medicine_med_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.medicine_med_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3267 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: medicine_med_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.medicine_med_id_seq OWNED BY public.medicine.med_id;
+
+
+--
+-- TOC entry 197 (class 1259 OID 24578)
+-- Name: parts; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.parts (
+    pid integer NOT NULL,
+    pname character varying(10),
+    pmaterial character varying(10),
+    pcolor character varying(10),
+    pprice double precision
+);
+
+
+ALTER TABLE public.parts OWNER TO appusr;
+
+--
+-- TOC entry 196 (class 1259 OID 24576)
+-- Name: parts_pid_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.parts_pid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.parts_pid_seq OWNER TO appusr;
+
+--
+-- TOC entry 3268 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: parts_pid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.parts_pid_seq OWNED BY public.parts.pid;
+
+
+--
+-- TOC entry 203 (class 1259 OID 40975)
+-- Name: phone; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.phone (
+    phone_id integer NOT NULL,
+    usr_id integer,
+    usr_phone character(10)
+);
+
+
+ALTER TABLE public.phone OWNER TO appusr;
+
+--
+-- TOC entry 202 (class 1259 OID 40973)
+-- Name: phone_phone_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.phone_phone_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.phone_phone_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3269 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: phone_phone_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.phone_phone_id_seq OWNED BY public.phone.phone_id;
+
+
+--
+-- TOC entry 245 (class 1259 OID 41285)
+-- Name: places; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.places (
+    c_id integer NOT NULL,
+    rq_id integer NOT NULL
+);
+
+
+ALTER TABLE public.places OWNER TO appusr;
+
+--
+-- TOC entry 241 (class 1259 OID 41216)
+-- Name: powergenerator; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.powergenerator (
+    pg_id integer NOT NULL,
+    pg_wattage double precision,
+    pg_fueltype character varying(20),
+    resr_id integer
+);
+
+
+ALTER TABLE public.powergenerator OWNER TO appusr;
+
+--
+-- TOC entry 240 (class 1259 OID 41214)
+-- Name: powergenerator_pg_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.powergenerator_pg_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.powergenerator_pg_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3270 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: powergenerator_pg_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.powergenerator_pg_id_seq OWNED BY public.powergenerator.pg_id;
+
+
+--
+-- TOC entry 250 (class 1259 OID 41360)
+-- Name: provides; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.provides (
+    s_id integer NOT NULL,
+    resr_id integer NOT NULL
+);
+
+
+ALTER TABLE public.provides OWNER TO appusr;
+
+--
+-- TOC entry 248 (class 1259 OID 41330)
+-- Name: purchases; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.purchases (
+    rq_id integer NOT NULL,
+    resr_id integer NOT NULL,
+    purchase_price double precision,
+    quantity integer
+);
+
+
+ALTER TABLE public.purchases OWNER TO appusr;
+
+--
+-- TOC entry 213 (class 1259 OID 41048)
+-- Name: request; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.request (
+    rq_id integer NOT NULL,
+    rq_date character varying(20)
+);
+
+
+ALTER TABLE public.request OWNER TO appusr;
+
+--
+-- TOC entry 212 (class 1259 OID 41046)
+-- Name: request_rq_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.request_rq_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.request_rq_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3271 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: request_rq_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.request_rq_id_seq OWNED BY public.request.rq_id;
+
+
+--
+-- TOC entry 215 (class 1259 OID 41056)
+-- Name: reservation; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.reservation (
+    rs_id integer NOT NULL,
+    rs_date character varying(20)
+);
+
+
+ALTER TABLE public.reservation OWNER TO appusr;
+
+--
+-- TOC entry 214 (class 1259 OID 41054)
+-- Name: reservation_rs_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.reservation_rs_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reservation_rs_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3272 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: reservation_rs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.reservation_rs_id_seq OWNED BY public.reservation.rs_id;
+
+
+--
+-- TOC entry 217 (class 1259 OID 41064)
+-- Name: resources; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.resources (
+    resr_id integer NOT NULL,
+    resr_price double precision,
+    resr_location character varying(20),
+    resr_category character varying(20),
+    stock integer
+);
+
+
+ALTER TABLE public.resources OWNER TO appusr;
+
+--
+-- TOC entry 216 (class 1259 OID 41062)
+-- Name: resources_resr_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.resources_resr_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.resources_resr_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3273 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: resources_resr_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.resources_resr_id_seq OWNED BY public.resources.resr_id;
+
+
+--
+-- TOC entry 207 (class 1259 OID 41001)
+-- Name: supplier; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.supplier (
+    s_id integer NOT NULL,
+    s_usr character varying(20),
+    s_password character varying(20),
+    s_location character varying(20),
+    s_resources character varying(20),
+    usr_id integer
+);
+
+
+ALTER TABLE public.supplier OWNER TO appusr;
+
+--
+-- TOC entry 206 (class 1259 OID 40999)
+-- Name: supplier_s_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.supplier_s_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.supplier_s_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3274 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: supplier_s_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.supplier_s_id_seq OWNED BY public.supplier.s_id;
+
+
+--
+-- TOC entry 201 (class 1259 OID 40962)
+-- Name: sys_admin; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.sys_admin (
+    sa_id integer NOT NULL,
+    sa_user character varying(20),
+    sa_password character varying(20),
+    usr_id integer
+);
+
+
+ALTER TABLE public.sys_admin OWNER TO appusr;
+
+--
+-- TOC entry 200 (class 1259 OID 40960)
+-- Name: sys_admin_sa_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.sys_admin_sa_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sys_admin_sa_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3275 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: sys_admin_sa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.sys_admin_sa_id_seq OWNED BY public.sys_admin.sa_id;
+
+
+--
+-- TOC entry 237 (class 1259 OID 41190)
+-- Name: tools; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.tools (
+    tool_id integer NOT NULL,
+    tool_name character varying(20),
+    resr_id integer
+);
+
+
+ALTER TABLE public.tools OWNER TO appusr;
+
+--
+-- TOC entry 236 (class 1259 OID 41188)
+-- Name: tools_tool_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.tools_tool_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tools_tool_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3276 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: tools_tool_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.tools_tool_id_seq OWNED BY public.tools.tool_id;
+
+
+--
+-- TOC entry 247 (class 1259 OID 41315)
+-- Name: transaction; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.transaction (
+    cc_id integer NOT NULL,
+    rq_id integer NOT NULL,
+    transaction_num integer
+);
+
+
+ALTER TABLE public.transaction OWNER TO appusr;
+
+--
+-- TOC entry 199 (class 1259 OID 32770)
+-- Name: usr; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.usr (
+    usr_id integer NOT NULL,
+    usr_fname character varying(20),
+    usr_lname character varying(20),
+    usr_email character varying(20)
+);
+
+
+ALTER TABLE public.usr OWNER TO appusr;
+
+--
+-- TOC entry 198 (class 1259 OID 32768)
+-- Name: usr_usr_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.usr_usr_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.usr_usr_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3277 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: usr_usr_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.usr_usr_id_seq OWNED BY public.usr.usr_id;
+
+
+--
+-- TOC entry 219 (class 1259 OID 41072)
+-- Name: water; Type: TABLE; Schema: public; Owner: appusr
+--
+
+CREATE TABLE public.water (
+    h2o_id integer NOT NULL,
+    h2o_volume double precision,
+    resr_id integer
+);
+
+
+ALTER TABLE public.water OWNER TO appusr;
+
+--
+-- TOC entry 218 (class 1259 OID 41070)
+-- Name: water_h20_id_seq; Type: SEQUENCE; Schema: public; Owner: appusr
+--
+
+CREATE SEQUENCE public.water_h20_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.water_h20_id_seq OWNER TO appusr;
+
+--
+-- TOC entry 3278 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: water_h20_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: appusr
+--
+
+ALTER SEQUENCE public.water_h20_id_seq OWNED BY public.water.h2o_id;
+
+
+--
+-- TOC entry 2965 (class 2604 OID 41101)
+-- Name: babyfood bb_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.babyfood ALTER COLUMN bb_id SET DEFAULT nextval('public.babyfood_bb_id_seq'::regclass);
+
+
+--
+-- TOC entry 2975 (class 2604 OID 41232)
+-- Name: batteries batt_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.batteries ALTER COLUMN batt_id SET DEFAULT nextval('public.batteries_bat_id_seq'::regclass);
+
+
+--
+-- TOC entry 2966 (class 2604 OID 41114)
+-- Name: cannedfood cf_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.cannedfood ALTER COLUMN cf_id SET DEFAULT nextval('public.cannedfood_cf_id_seq'::regclass);
+
+
+--
+-- TOC entry 2956 (class 2604 OID 40991)
+-- Name: client c_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.client ALTER COLUMN c_id SET DEFAULT nextval('public.client_c_id_seq'::regclass);
+
+
+--
+-- TOC entry 2973 (class 2604 OID 41206)
+-- Name: clothing cl_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.clothing ALTER COLUMN cl_id SET DEFAULT nextval('public.clothing_cl_id_seq'::regclass);
+
+
+--
+-- TOC entry 2958 (class 2604 OID 41017)
+-- Name: creditcard cc_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.creditcard ALTER COLUMN cc_id SET DEFAULT nextval('public.creditcard_cc_id_seq'::regclass);
+
+
+--
+-- TOC entry 2959 (class 2604 OID 41038)
+-- Name: creditcardnumber cc_number_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.creditcardnumber ALTER COLUMN cc_number_id SET DEFAULT nextval('public.creditcardnumber_cc_number_id_seq'::regclass);
+
+
+--
+-- TOC entry 2967 (class 2604 OID 41127)
+-- Name: dryfood df_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.dryfood ALTER COLUMN df_id SET DEFAULT nextval('public.dryfood_df_id_seq'::regclass);
+
+
+--
+-- TOC entry 2969 (class 2604 OID 41153)
+-- Name: fuel fuel_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.fuel ALTER COLUMN fuel_id SET DEFAULT nextval('public.fuel_fuel_id_seq'::regclass);
+
+
+--
+-- TOC entry 2971 (class 2604 OID 41180)
+-- Name: heavyequip heq_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.heavyequip ALTER COLUMN heq_id SET DEFAULT nextval('public.heavyequip_heq_id_seq'::regclass);
+
+
+--
+-- TOC entry 2968 (class 2604 OID 41140)
+-- Name: ice ice_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.ice ALTER COLUMN ice_id SET DEFAULT nextval('public.ice_ice_id_seq'::regclass);
+
+
+--
+-- TOC entry 2970 (class 2604 OID 41167)
+-- Name: medicaldevices mdev_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.medicaldevices ALTER COLUMN mdev_id SET DEFAULT nextval('public.medicaldevices_mdev_id_seq'::regclass);
+
+
+--
+-- TOC entry 2964 (class 2604 OID 41088)
+-- Name: medicine med_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.medicine ALTER COLUMN med_id SET DEFAULT nextval('public.medicine_med_id_seq'::regclass);
+
+
+--
+-- TOC entry 2952 (class 2604 OID 24581)
+-- Name: parts pid; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.parts ALTER COLUMN pid SET DEFAULT nextval('public.parts_pid_seq'::regclass);
+
+
+--
+-- TOC entry 2955 (class 2604 OID 40978)
+-- Name: phone phone_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.phone ALTER COLUMN phone_id SET DEFAULT nextval('public.phone_phone_id_seq'::regclass);
+
+
+--
+-- TOC entry 2974 (class 2604 OID 41219)
+-- Name: powergenerator pg_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.powergenerator ALTER COLUMN pg_id SET DEFAULT nextval('public.powergenerator_pg_id_seq'::regclass);
+
+
+--
+-- TOC entry 2960 (class 2604 OID 41051)
+-- Name: request rq_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.request ALTER COLUMN rq_id SET DEFAULT nextval('public.request_rq_id_seq'::regclass);
+
+
+--
+-- TOC entry 2961 (class 2604 OID 41059)
+-- Name: reservation rs_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.reservation ALTER COLUMN rs_id SET DEFAULT nextval('public.reservation_rs_id_seq'::regclass);
+
+
+--
+-- TOC entry 2962 (class 2604 OID 41067)
+-- Name: resources resr_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.resources ALTER COLUMN resr_id SET DEFAULT nextval('public.resources_resr_id_seq'::regclass);
+
+
+--
+-- TOC entry 2957 (class 2604 OID 41004)
+-- Name: supplier s_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.supplier ALTER COLUMN s_id SET DEFAULT nextval('public.supplier_s_id_seq'::regclass);
+
+
+--
+-- TOC entry 2954 (class 2604 OID 40965)
+-- Name: sys_admin sa_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.sys_admin ALTER COLUMN sa_id SET DEFAULT nextval('public.sys_admin_sa_id_seq'::regclass);
+
+
+--
+-- TOC entry 2972 (class 2604 OID 41193)
+-- Name: tools tool_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.tools ALTER COLUMN tool_id SET DEFAULT nextval('public.tools_tool_id_seq'::regclass);
+
+
+--
+-- TOC entry 2953 (class 2604 OID 32773)
+-- Name: usr usr_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.usr ALTER COLUMN usr_id SET DEFAULT nextval('public.usr_usr_id_seq'::regclass);
+
+
+--
+-- TOC entry 2963 (class 2604 OID 41075)
+-- Name: water h2o_id; Type: DEFAULT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.water ALTER COLUMN h2o_id SET DEFAULT nextval('public.water_h20_id_seq'::regclass);
+
+
+--
+-- TOC entry 3240 (class 0 OID 41240)
+-- Dependencies: 244
+-- Data for Name: administrate; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (1, 5);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (2, 6);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (3, 7);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (4, 8);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (1, 9);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (2, 10);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (3, 11);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (4, 12);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (1, 13);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (2, 14);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (3, 15);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (4, 16);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (1, 17);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (2, 18);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (3, 19);
+INSERT INTO public.administrate (sa_id, usr_id) VALUES (4, 20);
+
+
+--
+-- TOC entry 3219 (class 0 OID 41098)
+-- Dependencies: 223
+-- Data for Name: babyfood; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.babyfood (bb_id, bb_expdate, bb_flavor, resr_id) VALUES (1, 'september 2022', 'Fruit', 21);
+INSERT INTO public.babyfood (bb_id, bb_expdate, bb_flavor, resr_id) VALUES (2, 'october 2021
+', 'Yogurt', 22);
+INSERT INTO public.babyfood (bb_id, bb_expdate, bb_flavor, resr_id) VALUES (3, 'november 2022', 'Sweet Potato', 23);
+INSERT INTO public.babyfood (bb_id, bb_expdate, bb_flavor, resr_id) VALUES (4, 'december 2021', 'Pearl', 24);
+INSERT INTO public.babyfood (bb_id, bb_expdate, bb_flavor, resr_id) VALUES (5, 'january 2022', 'Broccoli', 25);
+INSERT INTO public.babyfood (bb_id, bb_expdate, bb_flavor, resr_id) VALUES (6, 'february 2021', 'Banana', 26);
+INSERT INTO public.babyfood (bb_id, bb_expdate, bb_flavor, resr_id) VALUES (7, 'march 2022', 'Pineapple', 27);
+INSERT INTO public.babyfood (bb_id, bb_expdate, bb_flavor, resr_id) VALUES (8, 'april 2021', 'Carrot', 28);
+INSERT INTO public.babyfood (bb_id, bb_expdate, bb_flavor, resr_id) VALUES (9, 'may 2022', 'Blueberry', 29);
+INSERT INTO public.babyfood (bb_id, bb_expdate, bb_flavor, resr_id) VALUES (10, 'june 2021', 'Yogurt', 30);
+
+
+--
+-- TOC entry 3239 (class 0 OID 41229)
+-- Dependencies: 243
+-- Data for Name: batteries; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.batteries (batt_id, batt_type, resr_id) VALUES (1, 'AA2', 121);
+INSERT INTO public.batteries (batt_id, batt_type, resr_id) VALUES (2, 'AA3', 122);
+INSERT INTO public.batteries (batt_id, batt_type, resr_id) VALUES (3, 'C', 123);
+INSERT INTO public.batteries (batt_id, batt_type, resr_id) VALUES (4, 'D', 124);
+INSERT INTO public.batteries (batt_id, batt_type, resr_id) VALUES (5, 'AA2', 125);
+INSERT INTO public.batteries (batt_id, batt_type, resr_id) VALUES (6, 'C', 126);
+INSERT INTO public.batteries (batt_id, batt_type, resr_id) VALUES (7, 'D', 127);
+INSERT INTO public.batteries (batt_id, batt_type, resr_id) VALUES (8, 'AA3', 128);
+INSERT INTO public.batteries (batt_id, batt_type, resr_id) VALUES (9, 'AA4', 129);
+INSERT INTO public.batteries (batt_id, batt_type, resr_id) VALUES (10, 'C', 130);
+
+
+--
+-- TOC entry 3221 (class 0 OID 41111)
+-- Dependencies: 225
+-- Data for Name: cannedfood; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.cannedfood (cf_id, cf_expdate, cf_name, resr_id) VALUES (1, 'october 2020', 'Rice', 31);
+INSERT INTO public.cannedfood (cf_id, cf_expdate, cf_name, resr_id) VALUES (2, 'november 2023', 'Chicken', 32);
+INSERT INTO public.cannedfood (cf_id, cf_expdate, cf_name, resr_id) VALUES (3, 'december 2023', 'Spagetti', 33);
+INSERT INTO public.cannedfood (cf_id, cf_expdate, cf_name, resr_id) VALUES (4, 'september 2023', 'Chicken', 34);
+INSERT INTO public.cannedfood (cf_id, cf_expdate, cf_name, resr_id) VALUES (5, 'august 2023', 'Rice', 35);
+INSERT INTO public.cannedfood (cf_id, cf_expdate, cf_name, resr_id) VALUES (6, 'july 2023', 'Spagetti', 36);
+INSERT INTO public.cannedfood (cf_id, cf_expdate, cf_name, resr_id) VALUES (7, 'june 2023', 'Chicken', 37);
+INSERT INTO public.cannedfood (cf_id, cf_expdate, cf_name, resr_id) VALUES (8, 'may 2023', 'Rice', 38);
+INSERT INTO public.cannedfood (cf_id, cf_expdate, cf_name, resr_id) VALUES (9, 'april 2023', 'Spagetti', 39);
+INSERT INTO public.cannedfood (cf_id, cf_expdate, cf_name, resr_id) VALUES (10, 'march 2023', 'Chicken', 40);
+
+
+--
+-- TOC entry 3201 (class 0 OID 40988)
+-- Dependencies: 205
+-- Data for Name: client; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.client (c_id, c_usr, c_password, usr_id) VALUES (1, 'edgar', ' tree', 1);
+INSERT INTO public.client (c_id, c_usr, c_password, usr_id) VALUES (2, 'edwin', 'dedbde', 2);
+INSERT INTO public.client (c_id, c_usr, c_password, usr_id) VALUES (3, 'fabian', 'ioeoeiie', 3);
+INSERT INTO public.client (c_id, c_usr, c_password, usr_id) VALUES (4, 'manuel', 'ecjecjc', 4);
+INSERT INTO public.client (c_id, c_usr, c_password, usr_id) VALUES (5, 'john', 'ocjcwpcic', 5);
+INSERT INTO public.client (c_id, c_usr, c_password, usr_id) VALUES (6, 'arturo', 'iwxwkxniie', 6);
+INSERT INTO public.client (c_id, c_usr, c_password, usr_id) VALUES (7, 'makoto', 'ije8fewfh8', 7);
+INSERT INTO public.client (c_id, c_usr, c_password, usr_id) VALUES (8, 'todd', 'euifchewiuc', 8);
+INSERT INTO public.client (c_id, c_usr, c_password, usr_id) VALUES (9, 'ed', 'chfeufhhewf8', 9);
+INSERT INTO public.client (c_id, c_usr, c_password, usr_id) VALUES (10, 'jason', 'cfhe8h9wff', 10);
+
+
+--
+-- TOC entry 3235 (class 0 OID 41203)
+-- Dependencies: 239
+-- Data for Name: clothing; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.clothing (cl_id, cl_size, cl_color, cl_material, resr_id) VALUES (1, 'medium', 'blue', 'tela', 101);
+INSERT INTO public.clothing (cl_id, cl_size, cl_color, cl_material, resr_id) VALUES (2, 'small', 'red', 'tela', 102);
+INSERT INTO public.clothing (cl_id, cl_size, cl_color, cl_material, resr_id) VALUES (3, 'large', 'green', 'tela', 103);
+INSERT INTO public.clothing (cl_id, cl_size, cl_color, cl_material, resr_id) VALUES (4, 'x-large', 'yellow', 'tela', 104);
+INSERT INTO public.clothing (cl_id, cl_size, cl_color, cl_material, resr_id) VALUES (5, 'x-small', 'blue', 'tela', 105);
+INSERT INTO public.clothing (cl_id, cl_size, cl_color, cl_material, resr_id) VALUES (6, 'small', 'green', 'tela', 106);
+INSERT INTO public.clothing (cl_id, cl_size, cl_color, cl_material, resr_id) VALUES (7, 'medium', 'yellow', 'tela', 107);
+INSERT INTO public.clothing (cl_id, cl_size, cl_color, cl_material, resr_id) VALUES (8, 'large', 'red', 'tela', 108);
+INSERT INTO public.clothing (cl_id, cl_size, cl_color, cl_material, resr_id) VALUES (9, 'x-large', 'green', 'tela', 109);
+INSERT INTO public.clothing (cl_id, cl_size, cl_color, cl_material, resr_id) VALUES (10, 'x-small', 'white', 'tela', 110);
+
+
+--
+-- TOC entry 3245 (class 0 OID 41345)
+-- Dependencies: 249
+-- Data for Name: confirmation; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.confirmation (rs_id, resr_id, confirmation_status, quantity) VALUES (1, 9, 'confirmed', 32);
+INSERT INTO public.confirmation (rs_id, resr_id, confirmation_status, quantity) VALUES (2, 18, 'unconfirmed', 62);
+INSERT INTO public.confirmation (rs_id, resr_id, confirmation_status, quantity) VALUES (3, 27, 'confirmed', 50);
+INSERT INTO public.confirmation (rs_id, resr_id, confirmation_status, quantity) VALUES (4, 36, 'unconfirmed', 100);
+INSERT INTO public.confirmation (rs_id, resr_id, confirmation_status, quantity) VALUES (5, 45, 'confirmed', 63);
+INSERT INTO public.confirmation (rs_id, resr_id, confirmation_status, quantity) VALUES (6, 54, 'confirmed', 7);
+INSERT INTO public.confirmation (rs_id, resr_id, confirmation_status, quantity) VALUES (7, 63, 'confirmed', 24);
+INSERT INTO public.confirmation (rs_id, resr_id, confirmation_status, quantity) VALUES (8, 72, 'unconfirmed', 12);
+INSERT INTO public.confirmation (rs_id, resr_id, confirmation_status, quantity) VALUES (9, 81, 'confirmed', 1);
+INSERT INTO public.confirmation (rs_id, resr_id, confirmation_status, quantity) VALUES (10, 90, 'confirmed', 1);
+
+
+--
+-- TOC entry 3205 (class 0 OID 41014)
+-- Dependencies: 209
+-- Data for Name: creditcard; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.creditcard (cc_id, cc_nameoncard, cc_expdate, cc_cvc, c_id) VALUES (1, 'EdgarRivera', 'enero 2022', 111, 1);
+INSERT INTO public.creditcard (cc_id, cc_nameoncard, cc_expdate, cc_cvc, c_id) VALUES (2, 'EdwinBorrero', 'febrero 2022', 112, 2);
+INSERT INTO public.creditcard (cc_id, cc_nameoncard, cc_expdate, cc_cvc, c_id) VALUES (3, 'FabianGuzman', 'marzo 2021', 333, 3);
+INSERT INTO public.creditcard (cc_id, cc_nameoncard, cc_expdate, cc_cvc, c_id) VALUES (4, 'ManuelRodriguez', 'abril 2022', 444, 4);
+INSERT INTO public.creditcard (cc_id, cc_nameoncard, cc_expdate, cc_cvc, c_id) VALUES (5, 'JohnJonhson', 'mayo 2022', 555, 5);
+INSERT INTO public.creditcard (cc_id, cc_nameoncard, cc_expdate, cc_cvc, c_id) VALUES (6, 'ArturoMorgan', 'junio 2022', 656, 6);
+INSERT INTO public.creditcard (cc_id, cc_nameoncard, cc_expdate, cc_cvc, c_id) VALUES (7, 'MakotoNijima', 'julio 2022', 777, 7);
+INSERT INTO public.creditcard (cc_id, cc_nameoncard, cc_expdate, cc_cvc, c_id) VALUES (8, 'ToddHoward', 'agosto 2022', 888, 8);
+INSERT INTO public.creditcard (cc_id, cc_nameoncard, cc_expdate, cc_cvc, c_id) VALUES (9, 'EdBoon', 'septiembre 2022', 999, 9);
+INSERT INTO public.creditcard (cc_id, cc_nameoncard, cc_expdate, cc_cvc, c_id) VALUES (10, 'Jason', 'Jones', 123, 10);
+
+
+--
+-- TOC entry 3207 (class 0 OID 41035)
+-- Dependencies: 211
+-- Data for Name: creditcardnumber; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.creditcardnumber (cc_number_id, cc_id, cc_number) VALUES (1, 1, '23232132');
+INSERT INTO public.creditcardnumber (cc_number_id, cc_id, cc_number) VALUES (2, 2, '378273373');
+INSERT INTO public.creditcardnumber (cc_number_id, cc_id, cc_number) VALUES (3, 3, '7823636');
+INSERT INTO public.creditcardnumber (cc_number_id, cc_id, cc_number) VALUES (4, 4, '371736');
+INSERT INTO public.creditcardnumber (cc_number_id, cc_id, cc_number) VALUES (5, 5, '3271686');
+INSERT INTO public.creditcardnumber (cc_number_id, cc_id, cc_number) VALUES (6, 6, '38616828');
+INSERT INTO public.creditcardnumber (cc_number_id, cc_id, cc_number) VALUES (7, 7, '3973173');
+INSERT INTO public.creditcardnumber (cc_number_id, cc_id, cc_number) VALUES (8, 8, '7319731');
+INSERT INTO public.creditcardnumber (cc_number_id, cc_id, cc_number) VALUES (9, 9, '386318');
+INSERT INTO public.creditcardnumber (cc_number_id, cc_id, cc_number) VALUES (10, 10, '387361');
+
+
+--
+-- TOC entry 3223 (class 0 OID 41124)
+-- Dependencies: 227
+-- Data for Name: dryfood; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.dryfood (df_id, df_expdate, df_name, resr_id) VALUES (1, '10 november 2023', 'Almond', 41);
+INSERT INTO public.dryfood (df_id, df_expdate, df_name, resr_id) VALUES (2, '15 october 2023', 'Anise', 42);
+INSERT INTO public.dryfood (df_id, df_expdate, df_name, resr_id) VALUES (3, '8 september 2023', 'Apricort', 43);
+INSERT INTO public.dryfood (df_id, df_expdate, df_name, resr_id) VALUES (4, '2 august 2023', 'Arrowroot', 44);
+INSERT INTO public.dryfood (df_id, df_expdate, df_name, resr_id) VALUES (5, '20 july 2023', 'Betelnut', 45);
+INSERT INTO public.dryfood (df_id, df_expdate, df_name, resr_id) VALUES (6, '27 june 2023', 'Cantaloupe Seeds', 46);
+INSERT INTO public.dryfood (df_id, df_expdate, df_name, resr_id) VALUES (7, '17 may 2023', 'Cashewnut', 47);
+INSERT INTO public.dryfood (df_id, df_expdate, df_name, resr_id) VALUES (8, '3 april 2023', 'Chesnut', 48);
+INSERT INTO public.dryfood (df_id, df_expdate, df_name, resr_id) VALUES (9, '26 march 2023', 'Almond', 49);
+INSERT INTO public.dryfood (df_id, df_expdate, df_name, resr_id) VALUES (10, '19 february ', 'Anise', 50);
+
+
+--
+-- TOC entry 3227 (class 0 OID 41150)
+-- Dependencies: 231
+-- Data for Name: fuel; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.fuel (fuel_id, fuel_type, resr_id) VALUES (1, 'Diesel', 61);
+INSERT INTO public.fuel (fuel_id, fuel_type, resr_id) VALUES (2, 'Regular', 62);
+INSERT INTO public.fuel (fuel_id, fuel_type, resr_id) VALUES (3, 'Premium', 63);
+INSERT INTO public.fuel (fuel_id, fuel_type, resr_id) VALUES (4, 'Diesel', 64);
+INSERT INTO public.fuel (fuel_id, fuel_type, resr_id) VALUES (5, 'Regular', 65);
+INSERT INTO public.fuel (fuel_id, fuel_type, resr_id) VALUES (6, 'Premium', 66);
+INSERT INTO public.fuel (fuel_id, fuel_type, resr_id) VALUES (7, 'Diesel', 67);
+INSERT INTO public.fuel (fuel_id, fuel_type, resr_id) VALUES (8, 'Regular', 68);
+INSERT INTO public.fuel (fuel_id, fuel_type, resr_id) VALUES (9, 'Premium', 69);
+INSERT INTO public.fuel (fuel_id, fuel_type, resr_id) VALUES (10, 'Diesel', 70);
+
+
+--
+-- TOC entry 3231 (class 0 OID 41177)
+-- Dependencies: 235
+-- Data for Name: heavyequip; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.heavyequip (heq_id, heq_type, resr_id) VALUES (1, 'Excavator', 81);
+INSERT INTO public.heavyequip (heq_id, heq_type, resr_id) VALUES (2, 'Backhoe', 82);
+INSERT INTO public.heavyequip (heq_id, heq_type, resr_id) VALUES (3, 'Dragline Excavator', 83);
+INSERT INTO public.heavyequip (heq_id, heq_type, resr_id) VALUES (4, 'Bulldozers', 84);
+INSERT INTO public.heavyequip (heq_id, heq_type, resr_id) VALUES (5, 'Graders', 85);
+INSERT INTO public.heavyequip (heq_id, heq_type, resr_id) VALUES (6, 'Wheel Tractor', 86);
+INSERT INTO public.heavyequip (heq_id, heq_type, resr_id) VALUES (7, 'Trenchers', 87);
+INSERT INTO public.heavyequip (heq_id, heq_type, resr_id) VALUES (8, 'Loaders', 88);
+INSERT INTO public.heavyequip (heq_id, heq_type, resr_id) VALUES (9, 'Compactors', 89);
+INSERT INTO public.heavyequip (heq_id, heq_type, resr_id) VALUES (10, 'Pavers', 90);
+
+
+--
+-- TOC entry 3225 (class 0 OID 41137)
+-- Dependencies: 229
+-- Data for Name: ice; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.ice (ice_id, ice_bagsize, resr_id) VALUES (1, 'large', 51);
+INSERT INTO public.ice (ice_id, ice_bagsize, resr_id) VALUES (2, 'medium', 52);
+INSERT INTO public.ice (ice_id, ice_bagsize, resr_id) VALUES (3, 'small', 53);
+INSERT INTO public.ice (ice_id, ice_bagsize, resr_id) VALUES (4, 'large', 54);
+INSERT INTO public.ice (ice_id, ice_bagsize, resr_id) VALUES (5, 'small', 55);
+INSERT INTO public.ice (ice_id, ice_bagsize, resr_id) VALUES (6, 'medium', 56);
+INSERT INTO public.ice (ice_id, ice_bagsize, resr_id) VALUES (7, 'large', 57);
+INSERT INTO public.ice (ice_id, ice_bagsize, resr_id) VALUES (8, 'medium', 58);
+INSERT INTO public.ice (ice_id, ice_bagsize, resr_id) VALUES (9, 'small', 59);
+INSERT INTO public.ice (ice_id, ice_bagsize, resr_id) VALUES (10, 'small', 60);
+
+
+--
+-- TOC entry 3242 (class 0 OID 41300)
+-- Dependencies: 246
+-- Data for Name: makes; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.makes (c_id, rs_id) VALUES (1, 10);
+INSERT INTO public.makes (c_id, rs_id) VALUES (2, 9);
+INSERT INTO public.makes (c_id, rs_id) VALUES (3, 8);
+INSERT INTO public.makes (c_id, rs_id) VALUES (4, 7);
+INSERT INTO public.makes (c_id, rs_id) VALUES (5, 6);
+INSERT INTO public.makes (c_id, rs_id) VALUES (7, 4);
+INSERT INTO public.makes (c_id, rs_id) VALUES (6, 5);
+INSERT INTO public.makes (c_id, rs_id) VALUES (8, 3);
+INSERT INTO public.makes (c_id, rs_id) VALUES (9, 2);
+INSERT INTO public.makes (c_id, rs_id) VALUES (10, 1);
+
+
+--
+-- TOC entry 3229 (class 0 OID 41164)
+-- Dependencies: 233
+-- Data for Name: medicaldevices; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.medicaldevices (mdev_id, mdev_name, mdev_description, resr_id) VALUES (1, 'mascarilla', 'protege', 71);
+INSERT INTO public.medicaldevices (mdev_id, mdev_name, mdev_description, resr_id) VALUES (2, 'guantes', 'protege', 72);
+INSERT INTO public.medicaldevices (mdev_id, mdev_name, mdev_description, resr_id) VALUES (3, 'batas', 'protege', 73);
+INSERT INTO public.medicaldevices (mdev_id, mdev_name, mdev_description, resr_id) VALUES (4, 'gafas de proteccion', 'protege', 74);
+INSERT INTO public.medicaldevices (mdev_id, mdev_name, mdev_description, resr_id) VALUES (5, 'mascarilla', 'protege', 75);
+INSERT INTO public.medicaldevices (mdev_id, mdev_name, mdev_description, resr_id) VALUES (6, 'guantes', 'protege', 76);
+INSERT INTO public.medicaldevices (mdev_id, mdev_name, mdev_description, resr_id) VALUES (7, 'batas', 'protege', 77);
+INSERT INTO public.medicaldevices (mdev_id, mdev_name, mdev_description, resr_id) VALUES (8, 'gafas de proteccion', 'protege', 78);
+INSERT INTO public.medicaldevices (mdev_id, mdev_name, mdev_description, resr_id) VALUES (9, 'guantes', 'protege', 79);
+INSERT INTO public.medicaldevices (mdev_id, mdev_name, mdev_description, resr_id) VALUES (10, 'mascarillas', 'protege', 80);
+
+
+--
+-- TOC entry 3217 (class 0 OID 41085)
+-- Dependencies: 221
+-- Data for Name: medicine; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.medicine (med_id, med_name, resr_id) VALUES (1, 'panadol', 11);
+INSERT INTO public.medicine (med_id, med_name, resr_id) VALUES (2, 'Simvastatin', 12);
+INSERT INTO public.medicine (med_id, med_name, resr_id) VALUES (3, 'Lisinopril', 13);
+INSERT INTO public.medicine (med_id, med_name, resr_id) VALUES (4, 'Levothyroxine', 14);
+INSERT INTO public.medicine (med_id, med_name, resr_id) VALUES (5, 'Azithromycin', 15);
+INSERT INTO public.medicine (med_id, med_name, resr_id) VALUES (6, 'Metformin', 16);
+INSERT INTO public.medicine (med_id, med_name, resr_id) VALUES (7, 'Amlodipine', 17);
+INSERT INTO public.medicine (med_id, med_name, resr_id) VALUES (8, 'TussinDM', 18);
+INSERT INTO public.medicine (med_id, med_name, resr_id) VALUES (9, 'Diphenhydromine', 19);
+INSERT INTO public.medicine (med_id, med_name, resr_id) VALUES (10, 'Hydrocortizon', 20);
+
+
+--
+-- TOC entry 3193 (class 0 OID 24578)
+-- Dependencies: 197
+-- Data for Name: parts; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.parts (pid, pname, pmaterial, pcolor, pprice) VALUES (1, 'Bolts', 'steel', 'gray', 0.100000000000000006);
+
+
+--
+-- TOC entry 3199 (class 0 OID 40975)
+-- Dependencies: 203
+-- Data for Name: phone; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (1, 1, '7873422143');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (2, 2, '848841373 ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (3, 3, '332324354 ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (4, 4, '85854784  ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (5, 5, '23323232  ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (6, 6, '78737378  ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (7, 7, '78792029  ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (8, 8, '78734522  ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (9, 9, '78712231  ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (10, 10, '7876463   ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (11, 11, '7879242   ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (12, 12, '78754142  ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (13, 13, '78746232  ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (14, 14, '78785443  ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (15, 15, '78772651  ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (16, 16, '17879292  ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (17, 17, '1626261   ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (18, 18, '1271221   ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (19, 19, '9329737   ');
+INSERT INTO public.phone (phone_id, usr_id, usr_phone) VALUES (20, 20, '16621762  ');
+
+
+--
+-- TOC entry 3241 (class 0 OID 41285)
+-- Dependencies: 245
+-- Data for Name: places; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.places (c_id, rq_id) VALUES (3, 8);
+INSERT INTO public.places (c_id, rq_id) VALUES (4, 7);
+INSERT INTO public.places (c_id, rq_id) VALUES (5, 6);
+INSERT INTO public.places (c_id, rq_id) VALUES (6, 5);
+INSERT INTO public.places (c_id, rq_id) VALUES (7, 4);
+INSERT INTO public.places (c_id, rq_id) VALUES (8, 3);
+INSERT INTO public.places (c_id, rq_id) VALUES (9, 2);
+INSERT INTO public.places (c_id, rq_id) VALUES (10, 1);
+INSERT INTO public.places (c_id, rq_id) VALUES (1, 9);
+INSERT INTO public.places (c_id, rq_id) VALUES (2, 10);
+
+
+--
+-- TOC entry 3237 (class 0 OID 41216)
+-- Dependencies: 241
+-- Data for Name: powergenerator; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.powergenerator (pg_id, pg_wattage, pg_fueltype, resr_id) VALUES (1, 10000, 'premium', 111);
+INSERT INTO public.powergenerator (pg_id, pg_wattage, pg_fueltype, resr_id) VALUES (2, 10500, 'regular', 112);
+INSERT INTO public.powergenerator (pg_id, pg_wattage, pg_fueltype, resr_id) VALUES (3, 12000, 'premium', 113);
+INSERT INTO public.powergenerator (pg_id, pg_wattage, pg_fueltype, resr_id) VALUES (4, 12500, 'regular', 114);
+INSERT INTO public.powergenerator (pg_id, pg_wattage, pg_fueltype, resr_id) VALUES (5, 13000, 'premium', 115);
+INSERT INTO public.powergenerator (pg_id, pg_wattage, pg_fueltype, resr_id) VALUES (6, 13500, 'regular', 116);
+INSERT INTO public.powergenerator (pg_id, pg_wattage, pg_fueltype, resr_id) VALUES (7, 14000, 'premium', 117);
+INSERT INTO public.powergenerator (pg_id, pg_wattage, pg_fueltype, resr_id) VALUES (8, 14500, 'regular', 118);
+INSERT INTO public.powergenerator (pg_id, pg_wattage, pg_fueltype, resr_id) VALUES (9, 10000, 'premium', 119);
+INSERT INTO public.powergenerator (pg_id, pg_wattage, pg_fueltype, resr_id) VALUES (10, 15000, 'premium', 120);
+
+
+--
+-- TOC entry 3246 (class 0 OID 41360)
+-- Dependencies: 250
+-- Data for Name: provides; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.provides (s_id, resr_id) VALUES (1, 1);
+INSERT INTO public.provides (s_id, resr_id) VALUES (2, 2);
+INSERT INTO public.provides (s_id, resr_id) VALUES (3, 3);
+INSERT INTO public.provides (s_id, resr_id) VALUES (4, 4);
+INSERT INTO public.provides (s_id, resr_id) VALUES (5, 5);
+INSERT INTO public.provides (s_id, resr_id) VALUES (6, 6);
+INSERT INTO public.provides (s_id, resr_id) VALUES (7, 7);
+INSERT INTO public.provides (s_id, resr_id) VALUES (8, 8);
+INSERT INTO public.provides (s_id, resr_id) VALUES (9, 9);
+INSERT INTO public.provides (s_id, resr_id) VALUES (10, 10);
+INSERT INTO public.provides (s_id, resr_id) VALUES (1, 11);
+INSERT INTO public.provides (s_id, resr_id) VALUES (2, 12);
+INSERT INTO public.provides (s_id, resr_id) VALUES (3, 13);
+INSERT INTO public.provides (s_id, resr_id) VALUES (4, 14);
+INSERT INTO public.provides (s_id, resr_id) VALUES (5, 15);
+INSERT INTO public.provides (s_id, resr_id) VALUES (6, 16);
+INSERT INTO public.provides (s_id, resr_id) VALUES (7, 17);
+INSERT INTO public.provides (s_id, resr_id) VALUES (8, 18);
+INSERT INTO public.provides (s_id, resr_id) VALUES (9, 19);
+INSERT INTO public.provides (s_id, resr_id) VALUES (10, 20);
+INSERT INTO public.provides (s_id, resr_id) VALUES (1, 21);
+INSERT INTO public.provides (s_id, resr_id) VALUES (2, 22);
+INSERT INTO public.provides (s_id, resr_id) VALUES (3, 23);
+INSERT INTO public.provides (s_id, resr_id) VALUES (4, 24);
+INSERT INTO public.provides (s_id, resr_id) VALUES (5, 25);
+INSERT INTO public.provides (s_id, resr_id) VALUES (6, 26);
+INSERT INTO public.provides (s_id, resr_id) VALUES (7, 27);
+INSERT INTO public.provides (s_id, resr_id) VALUES (8, 28);
+INSERT INTO public.provides (s_id, resr_id) VALUES (9, 29);
+INSERT INTO public.provides (s_id, resr_id) VALUES (10, 30);
+INSERT INTO public.provides (s_id, resr_id) VALUES (1, 31);
+INSERT INTO public.provides (s_id, resr_id) VALUES (2, 32);
+INSERT INTO public.provides (s_id, resr_id) VALUES (3, 33);
+INSERT INTO public.provides (s_id, resr_id) VALUES (4, 34);
+INSERT INTO public.provides (s_id, resr_id) VALUES (5, 35);
+INSERT INTO public.provides (s_id, resr_id) VALUES (6, 36);
+INSERT INTO public.provides (s_id, resr_id) VALUES (7, 37);
+INSERT INTO public.provides (s_id, resr_id) VALUES (8, 38);
+INSERT INTO public.provides (s_id, resr_id) VALUES (9, 39);
+INSERT INTO public.provides (s_id, resr_id) VALUES (10, 40);
+INSERT INTO public.provides (s_id, resr_id) VALUES (1, 41);
+INSERT INTO public.provides (s_id, resr_id) VALUES (2, 42);
+INSERT INTO public.provides (s_id, resr_id) VALUES (3, 43);
+INSERT INTO public.provides (s_id, resr_id) VALUES (4, 44);
+INSERT INTO public.provides (s_id, resr_id) VALUES (5, 45);
+INSERT INTO public.provides (s_id, resr_id) VALUES (6, 46);
+INSERT INTO public.provides (s_id, resr_id) VALUES (7, 47);
+INSERT INTO public.provides (s_id, resr_id) VALUES (8, 48);
+INSERT INTO public.provides (s_id, resr_id) VALUES (9, 49);
+INSERT INTO public.provides (s_id, resr_id) VALUES (10, 50);
+INSERT INTO public.provides (s_id, resr_id) VALUES (1, 51);
+INSERT INTO public.provides (s_id, resr_id) VALUES (2, 52);
+INSERT INTO public.provides (s_id, resr_id) VALUES (3, 53);
+INSERT INTO public.provides (s_id, resr_id) VALUES (4, 54);
+INSERT INTO public.provides (s_id, resr_id) VALUES (5, 55);
+INSERT INTO public.provides (s_id, resr_id) VALUES (6, 56);
+INSERT INTO public.provides (s_id, resr_id) VALUES (7, 57);
+INSERT INTO public.provides (s_id, resr_id) VALUES (8, 58);
+INSERT INTO public.provides (s_id, resr_id) VALUES (9, 59);
+INSERT INTO public.provides (s_id, resr_id) VALUES (10, 60);
+INSERT INTO public.provides (s_id, resr_id) VALUES (1, 61);
+INSERT INTO public.provides (s_id, resr_id) VALUES (2, 62);
+INSERT INTO public.provides (s_id, resr_id) VALUES (3, 63);
+INSERT INTO public.provides (s_id, resr_id) VALUES (4, 64);
+INSERT INTO public.provides (s_id, resr_id) VALUES (5, 65);
+INSERT INTO public.provides (s_id, resr_id) VALUES (6, 66);
+INSERT INTO public.provides (s_id, resr_id) VALUES (7, 67);
+INSERT INTO public.provides (s_id, resr_id) VALUES (8, 68);
+INSERT INTO public.provides (s_id, resr_id) VALUES (9, 69);
+INSERT INTO public.provides (s_id, resr_id) VALUES (10, 70);
+INSERT INTO public.provides (s_id, resr_id) VALUES (1, 71);
+INSERT INTO public.provides (s_id, resr_id) VALUES (2, 72);
+INSERT INTO public.provides (s_id, resr_id) VALUES (3, 73);
+INSERT INTO public.provides (s_id, resr_id) VALUES (4, 74);
+INSERT INTO public.provides (s_id, resr_id) VALUES (5, 75);
+INSERT INTO public.provides (s_id, resr_id) VALUES (6, 76);
+INSERT INTO public.provides (s_id, resr_id) VALUES (7, 77);
+INSERT INTO public.provides (s_id, resr_id) VALUES (8, 78);
+INSERT INTO public.provides (s_id, resr_id) VALUES (9, 79);
+INSERT INTO public.provides (s_id, resr_id) VALUES (10, 80);
+INSERT INTO public.provides (s_id, resr_id) VALUES (1, 81);
+INSERT INTO public.provides (s_id, resr_id) VALUES (2, 82);
+INSERT INTO public.provides (s_id, resr_id) VALUES (3, 83);
+INSERT INTO public.provides (s_id, resr_id) VALUES (4, 84);
+INSERT INTO public.provides (s_id, resr_id) VALUES (5, 85);
+INSERT INTO public.provides (s_id, resr_id) VALUES (6, 86);
+INSERT INTO public.provides (s_id, resr_id) VALUES (7, 87);
+INSERT INTO public.provides (s_id, resr_id) VALUES (8, 88);
+INSERT INTO public.provides (s_id, resr_id) VALUES (9, 89);
+INSERT INTO public.provides (s_id, resr_id) VALUES (10, 90);
+INSERT INTO public.provides (s_id, resr_id) VALUES (1, 91);
+INSERT INTO public.provides (s_id, resr_id) VALUES (2, 92);
+INSERT INTO public.provides (s_id, resr_id) VALUES (3, 93);
+INSERT INTO public.provides (s_id, resr_id) VALUES (4, 94);
+INSERT INTO public.provides (s_id, resr_id) VALUES (5, 95);
+INSERT INTO public.provides (s_id, resr_id) VALUES (6, 96);
+INSERT INTO public.provides (s_id, resr_id) VALUES (7, 97);
+INSERT INTO public.provides (s_id, resr_id) VALUES (8, 98);
+INSERT INTO public.provides (s_id, resr_id) VALUES (9, 99);
+INSERT INTO public.provides (s_id, resr_id) VALUES (1, 100);
+
+
+--
+-- TOC entry 3244 (class 0 OID 41330)
+-- Dependencies: 248
+-- Data for Name: purchases; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.purchases (rq_id, resr_id, purchase_price, quantity) VALUES (1, 1, 4.42999999999999972, 18);
+INSERT INTO public.purchases (rq_id, resr_id, purchase_price, quantity) VALUES (2, 11, 6.65000000000000036, 3);
+INSERT INTO public.purchases (rq_id, resr_id, purchase_price, quantity) VALUES (3, 21, 1.15999999999999992, 4);
+INSERT INTO public.purchases (rq_id, resr_id, purchase_price, quantity) VALUES (4, 31, 12.1999999999999993, 8);
+INSERT INTO public.purchases (rq_id, resr_id, purchase_price, quantity) VALUES (5, 41, 36.5700000000000003, 5);
+INSERT INTO public.purchases (rq_id, resr_id, purchase_price, quantity) VALUES (6, 51, 2.2200000000000002, 2);
+INSERT INTO public.purchases (rq_id, resr_id, purchase_price, quantity) VALUES (7, 61, 2.70999999999999996, 1);
+INSERT INTO public.purchases (rq_id, resr_id, purchase_price, quantity) VALUES (8, 71, 14.3699999999999992, 20);
+INSERT INTO public.purchases (rq_id, resr_id, purchase_price, quantity) VALUES (9, 81, 2220, 2);
+INSERT INTO public.purchases (rq_id, resr_id, purchase_price, quantity) VALUES (10, 91, 16.6499999999999986, 30);
+
+
+--
+-- TOC entry 3209 (class 0 OID 41048)
+-- Dependencies: 213
+-- Data for Name: request; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.request (rq_id, rq_date) VALUES (1, '12  may 2020');
+INSERT INTO public.request (rq_id, rq_date) VALUES (2, '13  june 2020');
+INSERT INTO public.request (rq_id, rq_date) VALUES (3, '14 july 2020');
+INSERT INTO public.request (rq_id, rq_date) VALUES (4, '23 august 2020');
+INSERT INTO public.request (rq_id, rq_date) VALUES (5, '7 september 2020');
+INSERT INTO public.request (rq_id, rq_date) VALUES (6, '31 october 2020');
+INSERT INTO public.request (rq_id, rq_date) VALUES (7, '23 december 2020');
+INSERT INTO public.request (rq_id, rq_date) VALUES (8, '15 november 2020');
+INSERT INTO public.request (rq_id, rq_date) VALUES (10, '13 february 2021');
+INSERT INTO public.request (rq_id, rq_date) VALUES (9, '3 january 2021');
+
+
+--
+-- TOC entry 3211 (class 0 OID 41056)
+-- Dependencies: 215
+-- Data for Name: reservation; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.reservation (rs_id, rs_date) VALUES (1, '21 june 2020');
+INSERT INTO public.reservation (rs_id, rs_date) VALUES (2, '30 july 2020');
+INSERT INTO public.reservation (rs_id, rs_date) VALUES (3, '4  august 2020');
+INSERT INTO public.reservation (rs_id, rs_date) VALUES (4, '3 september 2020');
+INSERT INTO public.reservation (rs_id, rs_date) VALUES (5, '21 october 2020');
+INSERT INTO public.reservation (rs_id, rs_date) VALUES (6, '13 january 2021');
+INSERT INTO public.reservation (rs_id, rs_date) VALUES (7, '5 december 2020');
+INSERT INTO public.reservation (rs_id, rs_date) VALUES (8, '20 february 2021');
+INSERT INTO public.reservation (rs_id, rs_date) VALUES (9, '3 march 2021');
+INSERT INTO public.reservation (rs_id, rs_date) VALUES (10, '10 april 2021');
+
+
+--
+-- TOC entry 3213 (class 0 OID 41064)
+-- Dependencies: 217
+-- Data for Name: resources; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (1, 3.99000000000000021, 'Econo', 'water', 40);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (2, 3.99000000000000021, 'kmart', 'water', 7);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (81, 2000, 'Econo', 'heavyequipment', 4);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (3, 4.99000000000000021, 'walmart', 'water', 2);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (82, 2050, 'Kmart', 'heavywequipment', 0);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (4, 5.99000000000000021, 'Cotsco', 'water', 4);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (5, 3.99000000000000021, 'PerezHermanos', 'water', 39);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (6, 4.99000000000000021, 'Ralphs', 'water', 26);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (7, 5.99000000000000021, 'Capri', 'water', 7);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (8, 3.99000000000000021, '3T', 'water', 44);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (9, 0.989999999999999991, 'Always99', 'water', 85);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (10, 4.99000000000000021, 'Pueblo', 'water', 92);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (83, 3000, 'Walmart', 'heavyequipment', 1);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (21, 1.05000000000000004, 'Econo', 'babyfood', 189);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (22, 1.14999999999999991, 'Kmart', 'babyfood', 185);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (23, 0.949999999999999956, 'Walmart', 'babyfood', 235);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (24, 1.25, 'Costco', 'babyfood', 288);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (84, 3500, 'Costco', 'heavyequipment', 0);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (25, 0.900000000000000022, 'PerezHermanos', 'babyfood', 162);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (26, 1.19999999999999996, 'Ralphs', 'babyfood', 207);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (27, 1.30000000000000004, 'Capri', 'babyfood', 150);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (28, 1.05000000000000004, '3T', 'babyfood', 300);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (29, 1.3600000000000001, 'Always99', 'babyfood', 94);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (30, 1.10000000000000009, 'Pueblo', 'babyfood', 42);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (61, 2.43999999999999995, 'Shell', 'fuel', 100);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (62, 1.78000000000000003, 'Puma', 'fuel', 99);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (11, 5.99000000000000021, 'Econo', 'medicine', 144);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (12, 0.440000000000000002, 'Kmart', 'medicine', 103);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (13, 0.25, 'Walmart', 'medicine', 32);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (14, 1, 'Cotsco', 'medicine', 10);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (15, 10, 'PerezHermanos', 'medicine', 105);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (16, 0.299999999999999989, 'Ralphs', 'medicine', 177);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (31, 10.9900000000000002, 'Econo', 'cannedfood', 126);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (17, 0.5, 'Capri', 'medicine', 174);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (18, 4.99000000000000021, 'Walgreens', 'medicine', 112);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (19, 1, 'Always99', 'medicine', 42);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (20, 4.99000000000000021, 'Pueblo', 'medicine', 209);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (32, 11.9900000000000002, 'Kmart', 'cannedfood', 92);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (33, 9.99000000000000021, 'Walmart', 'cannedfood', 165);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (34, 7.99000000000000021, 'Costco', 'cannefood', 191);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (35, 8.99000000000000021, 'PerezHermanos', 'cannedfood', 264);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (36, 9.99000000000000021, 'Ralphs', 'cannedfood', 283);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (37, 11.9900000000000002, 'Capri', 'cannedfood', 254);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (38, 8.99000000000000021, '3T', 'cannedfood', 167);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (39, 0.989999999999999991, 'Always99', 'cannedfood', 230);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (40, 10.9900000000000002, 'Pueblo', 'cannefood', 115);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (63, 2.41000000000000014, 'Tostal', 'fuel', 98);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (41, 32.9500000000000028, 'Econo', 'dryfood', 191);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (42, 31.9499999999999993, 'Kmart', 'dryfood', 216);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (43, 33.9500000000000028, 'Cotsco', 'dryfood', 266);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (44, 30.9499999999999993, 'Walmart', 'dryfood', 178);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (45, 32.9500000000000028, 'PerezHermanos', 'dryfood', 163);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (46, 31.9499999999999993, 'Ralphs', 'dryfood', 138);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (47, 33.9500000000000028, 'Capri', 'dryfood', 212);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (48, 30.9499999999999993, '3T', 'dryfood', 273);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (49, 29.9899999999999984, 'Always99', 'dryfood', 167);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (50, 34.990000000000002, 'Pueblo', 'dryfood', 183);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (51, 2, 'Econo', 'ice', 8);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (52, 1.98999999999999999, 'Kmart', 'ice', 11);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (53, 2.99000000000000021, 'Walmart', 'ice', 57);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (54, 2, 'Costco', 'ice', 47);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (55, 2.99000000000000021, 'PerezHermanos', 'ice', 61);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (56, 1.98999999999999999, 'Ralphs', 'ice', 62);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (57, 2, 'Capri', 'ice', 66);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (58, 1.98999999999999999, '3T', 'ice', 48);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (59, 1.98999999999999999, 'Always99', 'ice', 5);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (60, 2, 'Pueblo', 'ice', 14);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (85, 2075, 'PerezHermanos', 'heavyequipment', 5);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (86, 3025, 'Ralphs', 'heavyequipment', 4);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (87, 3050, 'Capri', 'heavyequipent', 0);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (88, 3000, '3T', 'heavyequipment', 0);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (89, 2000, 'Always99', 'heavyequipment', 1);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (90, 2050, 'Pueblo', 'heavyequipment ', 3);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (64, 2.4700000000000002, 'Esso', 'fuel', 97);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (65, 1.96999999999999997, 'Golf', 'fuel', 96);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (66, 2.41999999999999993, 'Ecomax', 'fuel', 95);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (67, 3.10000000000000009, 'Golf', 'fuel', 100);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (68, 1.78000000000000003, 'Esso', 'fuel', 99);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (69, 2.62000000000000011, 'Tostal', 'fuel', 98);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (70, 3.10000000000000009, 'Puma', 'fuel', 97);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (71, 12.9499999999999993, 'Econo', 'medicaldevices', 58);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (72, 7.5, 'Kmart', 'medicaldevices', 88);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (73, 61.9600000000000009, 'Walmart', 'medicaldevices', 140);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (74, 8, 'Costco', 'medicaldevices', 185);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (75, 13.9499999999999993, 'PerezHermanos', 'medicaldevices', 104);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (76, 8.5, 'Ralphs', 'medicaldevices', 191);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (77, 62.9600000000000009, 'Capri', 'medicaldevices', 161);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (78, 14.9499999999999993, '3T', 'medicaldevices', 83);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (79, 9.5, 'Always99', 'medicaldevices', 86);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (80, 9, 'Pueblo', 'medicaldevices', 158);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (113, 7922, 'Walmart', 'powergenerator', 8);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (114, 9240, 'Costco', 'powergenerator', 9);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (115, 6385, 'PerezHermanos', 'powergenerator', 6);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (117, 6565, 'Capri', 'powergenerator', 1);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (118, 5037, '3T', 'powergenerator', 12);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (119, 10714, 'Always99', 'powergenerator', 0);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (91, 15, 'Econo', 'tools', 90);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (92, 14, 'Kmart', 'tools', 80);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (93, 16, 'Walmart', 'tools', 97);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (94, 12, 'Costco', 'tools', 105);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (96, 17, 'Ralphs', 'tools', 97);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (97, 18, 'Capri', 'tools', 63);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (98, 11, '3T', 'tools', 62);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (99, 9.99000000000000021, 'Always99', 'tools', 102);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (101, 16.9899999999999984, 'Econo', 'clothing', 73);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (102, 18.9899999999999984, 'Kmart', 'clothing', 95);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (104, 9.99000000000000021, 'Costco', 'clothing', 85);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (105, 15.9900000000000002, 'PerezHermanos', 'clothing', 74);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (106, 12.9900000000000002, 'Ralphs', 'clothing', 67);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (108, 13.9900000000000002, '3T', 'clothing', 64);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (109, 0.989999999999999991, 'Always99', 'clothing', 97);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (110, 15.9900000000000002, 'Pueblo', 'clothing', 50);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (121, 1.75, 'Econo', 'batteries', 249);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (122, 1.64999999999999991, 'Kmart', 'batteries', 191);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (123, 1.85000000000000009, 'Walmart', 'batteries', 125);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (124, 1.69999999999999996, 'Costco', 'batteries', 255);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (125, 1.60000000000000009, 'PerezHermanos', 'batteries', 273);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (126, 1.80000000000000004, 'Ralphs', 'batteries', 212);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (127, 1.75, 'Capri', 'batteries', 231);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (128, 1.80000000000000004, '3T', 'batteries', 139);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (129, 0.989999999999999991, 'Always99', 'batteries', 273);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (130, 1.5, 'Pueblo', 'batteries', 110);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (111, 11842, 'Econo', 'powergenerator', 10);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (112, 8129, 'Kmart', 'powergenerator', 11);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (116, 2137, 'Ralphs', 'powergenerator', 4);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (120, 3297, 'Pueblo', 'powergenerator', 2);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (95, 13, 'PerezHermanos', 'tools', 123);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (100, 19, 'Pueblo', 'tools', 134);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (103, 11.9900000000000002, 'Walmart', 'clothing', 57);
+INSERT INTO public.resources (resr_id, resr_price, resr_location, resr_category, stock) VALUES (107, 10.9900000000000002, 'Capri', 'clothing', 62);
+
+
+--
+-- TOC entry 3203 (class 0 OID 41001)
+-- Dependencies: 207
+-- Data for Name: supplier; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.supplier (s_id, s_usr, s_password, s_location, s_resources, usr_id) VALUES (1, 'Jeff', 'deduweukb', 'Cayey', 'baby food', 11);
+INSERT INTO public.supplier (s_id, s_usr, s_password, s_location, s_resources, usr_id) VALUES (2, 'Phil', 'f7fg7f8g2gf', 'Caguas', 'canned food', 12);
+INSERT INTO public.supplier (s_id, s_usr, s_password, s_location, s_resources, usr_id) VALUES (3, 'Gabe', 'egf37igf', 'San Juan', 'water', 13);
+INSERT INTO public.supplier (s_id, s_usr, s_password, s_location, s_resources, usr_id) VALUES (4, 'Johnny', 'h3wudgud', 'Ponce', 'tools', 14);
+INSERT INTO public.supplier (s_id, s_usr, s_password, s_location, s_resources, usr_id) VALUES (5, 'Michael', 'cbgicgec7cg', 'Mayaguez', 'clothing', 15);
+INSERT INTO public.supplier (s_id, s_usr, s_password, s_location, s_resources, usr_id) VALUES (6, 'Hideo', 'ch37c8cg78q', 'Bayamon', 'batteries', 16);
+INSERT INTO public.supplier (s_id, s_usr, s_password, s_location, s_resources, usr_id) VALUES (7, 'Reggie', 'eicycg2ggc2', 'Cabo Rojo', 'ice', 17);
+INSERT INTO public.supplier (s_id, s_usr, s_password, s_location, s_resources, usr_id) VALUES (8, 'Jacob', 'fheewgewiu', 'Rio Piedras', 'fuel', 18);
+INSERT INTO public.supplier (s_id, s_usr, s_password, s_location, s_resources, usr_id) VALUES (9, 'Keith', 'fcewigiwc', 'Aibonito', 'medication', 19);
+INSERT INTO public.supplier (s_id, s_usr, s_password, s_location, s_resources, usr_id) VALUES (10, 'George', 'xhwq8c', 'Cidra', 'heavy equipment', 20);
+
+
+--
+-- TOC entry 3197 (class 0 OID 40962)
+-- Dependencies: 201
+-- Data for Name: sys_admin; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.sys_admin (sa_id, sa_user, sa_password, usr_id) VALUES (1, 'edgar', '1997', 1);
+INSERT INTO public.sys_admin (sa_id, sa_user, sa_password, usr_id) VALUES (2, 'edwin', 'pchu', 2);
+INSERT INTO public.sys_admin (sa_id, sa_user, sa_password, usr_id) VALUES (3, 'fabian', 'fbiyfedye', 3);
+INSERT INTO public.sys_admin (sa_id, sa_user, sa_password, usr_id) VALUES (4, 'Manuel', 'CIIC4060', 4);
+
+
+--
+-- TOC entry 3233 (class 0 OID 41190)
+-- Dependencies: 237
+-- Data for Name: tools; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.tools (tool_id, tool_name, resr_id) VALUES (1, 'saw', 91);
+INSERT INTO public.tools (tool_id, tool_name, resr_id) VALUES (2, 'hammer', 92);
+INSERT INTO public.tools (tool_id, tool_name, resr_id) VALUES (3, 'cultivator', 93);
+INSERT INTO public.tools (tool_id, tool_name, resr_id) VALUES (4, 'rake', 94);
+INSERT INTO public.tools (tool_id, tool_name, resr_id) VALUES (5, 'gloves', 95);
+INSERT INTO public.tools (tool_id, tool_name, resr_id) VALUES (6, 'shovel ', 96);
+INSERT INTO public.tools (tool_id, tool_name, resr_id) VALUES (7, 'screwdriver', 97);
+INSERT INTO public.tools (tool_id, tool_name, resr_id) VALUES (8, 'wrench', 98);
+INSERT INTO public.tools (tool_id, tool_name, resr_id) VALUES (9, 'mallet', 99);
+INSERT INTO public.tools (tool_id, tool_name, resr_id) VALUES (10, 'chisel', 100);
+
+
+--
+-- TOC entry 3243 (class 0 OID 41315)
+-- Dependencies: 247
+-- Data for Name: transaction; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.transaction (cc_id, rq_id, transaction_num) VALUES (1, 10, 0);
+INSERT INTO public.transaction (cc_id, rq_id, transaction_num) VALUES (2, 9, 1);
+INSERT INTO public.transaction (cc_id, rq_id, transaction_num) VALUES (3, 8, 2);
+INSERT INTO public.transaction (cc_id, rq_id, transaction_num) VALUES (4, 7, 3);
+INSERT INTO public.transaction (cc_id, rq_id, transaction_num) VALUES (5, 6, 4);
+INSERT INTO public.transaction (cc_id, rq_id, transaction_num) VALUES (6, 5, 5);
+INSERT INTO public.transaction (cc_id, rq_id, transaction_num) VALUES (7, 4, 6);
+INSERT INTO public.transaction (cc_id, rq_id, transaction_num) VALUES (8, 3, 7);
+INSERT INTO public.transaction (cc_id, rq_id, transaction_num) VALUES (9, 2, 8);
+INSERT INTO public.transaction (cc_id, rq_id, transaction_num) VALUES (10, 1, 9);
+
+
+--
+-- TOC entry 3195 (class 0 OID 32770)
+-- Dependencies: 199
+-- Data for Name: usr; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (2, 'edwin', 'borrero', 'edwin.borrero.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (3, 'fabian', 'guzman', 'fabian.guzman.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (4, 'manuel', 'rodriguez', 'manuel.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (1, 'edgar', 'rivera', 'edgar.rivera.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (5, 'John', 'Johnson', 'sierra117.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (6, 'Arturo', 'Morgan', 'redr.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (7, 'Makoto', 'Nijima', 'nijima.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (8, 'Todd', 'Howard', 'bethesda.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (9, 'Ed', 'Boon', 'netherrealms.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (10, 'Jason', 'Jones', 'bungie.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (11, 'Jeff', 'Kapplan', 'blizzard.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (12, 'Phil', 'Spencer', 'xbox.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (13, 'Gabe', 'Newel', 'valve.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (14, 'Jonhnny', 'Cage', 'mk.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (15, 'Michael', 'Donnel', 'ost.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (16, 'Hideo', 'Kojima', 'konami.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (17, 'Reggie', 'Fisame', 'nintendo.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (18, 'Jacob', 'Keyes', 'autumm.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (19, 'Keith', 'David', 'arbiter.com');
+INSERT INTO public.usr (usr_id, usr_fname, usr_lname, usr_email) VALUES (20, 'George', 'Lucas', 'lucas.com');
+
+
+--
+-- TOC entry 3215 (class 0 OID 41072)
+-- Dependencies: 219
+-- Data for Name: water; Type: TABLE DATA; Schema: public; Owner: appusr
+--
+
+INSERT INTO public.water (h2o_id, h2o_volume, resr_id) VALUES (1, 3.78500000000000014, 1);
+INSERT INTO public.water (h2o_id, h2o_volume, resr_id) VALUES (2, 3.78500000000000014, 2);
+INSERT INTO public.water (h2o_id, h2o_volume, resr_id) VALUES (3, 7.57000000000000028, 3);
+INSERT INTO public.water (h2o_id, h2o_volume, resr_id) VALUES (4, 11.3550000000000004, 4);
+INSERT INTO public.water (h2o_id, h2o_volume, resr_id) VALUES (5, 15.1400000000000006, 5);
+INSERT INTO public.water (h2o_id, h2o_volume, resr_id) VALUES (6, 3.78500000000000014, 6);
+INSERT INTO public.water (h2o_id, h2o_volume, resr_id) VALUES (7, 7.57000000000000028, 7);
+INSERT INTO public.water (h2o_id, h2o_volume, resr_id) VALUES (8, 11.3550000000000004, 8);
+INSERT INTO public.water (h2o_id, h2o_volume, resr_id) VALUES (9, 15.1400000000000006, 9);
+INSERT INTO public.water (h2o_id, h2o_volume, resr_id) VALUES (10, 3.78500000000000014, 10);
+
+
+--
+-- TOC entry 3279 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: babyfood_bb_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.babyfood_bb_id_seq', 10, true);
+
+
+--
+-- TOC entry 3280 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: batteries_bat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.batteries_bat_id_seq', 10, true);
+
+
+--
+-- TOC entry 3281 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: cannedfood_cf_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.cannedfood_cf_id_seq', 10, true);
+
+
+--
+-- TOC entry 3282 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: client_c_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.client_c_id_seq', 10, true);
+
+
+--
+-- TOC entry 3283 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: clothing_cl_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.clothing_cl_id_seq', 10, true);
+
+
+--
+-- TOC entry 3284 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: creditcard_cc_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.creditcard_cc_id_seq', 10, true);
+
+
+--
+-- TOC entry 3285 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: creditcardnumber_cc_number_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.creditcardnumber_cc_number_id_seq', 10, true);
+
+
+--
+-- TOC entry 3286 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: dryfood_df_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.dryfood_df_id_seq', 10, true);
+
+
+--
+-- TOC entry 3287 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: fuel_fuel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.fuel_fuel_id_seq', 10, true);
+
+
+--
+-- TOC entry 3288 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: heavyequip_heq_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.heavyequip_heq_id_seq', 10, true);
+
+
+--
+-- TOC entry 3289 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: ice_ice_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.ice_ice_id_seq', 10, true);
+
+
+--
+-- TOC entry 3290 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: medicaldevices_mdev_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.medicaldevices_mdev_id_seq', 10, true);
+
+
+--
+-- TOC entry 3291 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: medicine_med_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.medicine_med_id_seq', 14, true);
+
+
+--
+-- TOC entry 3292 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: parts_pid_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.parts_pid_seq', 1, true);
+
+
+--
+-- TOC entry 3293 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: phone_phone_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.phone_phone_id_seq', 20, true);
+
+
+--
+-- TOC entry 3294 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: powergenerator_pg_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.powergenerator_pg_id_seq', 10, true);
+
+
+--
+-- TOC entry 3295 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: request_rq_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.request_rq_id_seq', 10, true);
+
+
+--
+-- TOC entry 3296 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: reservation_rs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.reservation_rs_id_seq', 10, true);
+
+
+--
+-- TOC entry 3297 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: resources_resr_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.resources_resr_id_seq', 130, true);
+
+
+--
+-- TOC entry 3298 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: supplier_s_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.supplier_s_id_seq', 10, true);
+
+
+--
+-- TOC entry 3299 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: sys_admin_sa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.sys_admin_sa_id_seq', 4, true);
+
+
+--
+-- TOC entry 3300 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: tools_tool_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.tools_tool_id_seq', 10, true);
+
+
+--
+-- TOC entry 3301 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: usr_usr_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.usr_usr_id_seq', 20, true);
+
+
+--
+-- TOC entry 3302 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: water_h20_id_seq; Type: SEQUENCE SET; Schema: public; Owner: appusr
+--
+
+SELECT pg_catalog.setval('public.water_h20_id_seq', 10, true);
+
+
+--
+-- TOC entry 3025 (class 2606 OID 41244)
+-- Name: administrate administrate_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.administrate
+    ADD CONSTRAINT administrate_pkey PRIMARY KEY (sa_id, usr_id);
+
+
+--
+-- TOC entry 3003 (class 2606 OID 41103)
+-- Name: babyfood babyfood_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.babyfood
+    ADD CONSTRAINT babyfood_pkey PRIMARY KEY (bb_id);
+
+
+--
+-- TOC entry 3023 (class 2606 OID 41234)
+-- Name: batteries batteries_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.batteries
+    ADD CONSTRAINT batteries_pkey PRIMARY KEY (batt_id);
+
+
+--
+-- TOC entry 3005 (class 2606 OID 41116)
+-- Name: cannedfood cannedfood_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.cannedfood
+    ADD CONSTRAINT cannedfood_pkey PRIMARY KEY (cf_id);
+
+
+--
+-- TOC entry 2985 (class 2606 OID 40993)
+-- Name: client client_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.client
+    ADD CONSTRAINT client_pkey PRIMARY KEY (c_id);
+
+
+--
+-- TOC entry 3019 (class 2606 OID 41208)
+-- Name: clothing clothing_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.clothing
+    ADD CONSTRAINT clothing_pkey PRIMARY KEY (cl_id);
+
+
+--
+-- TOC entry 3035 (class 2606 OID 41349)
+-- Name: confirmation confirmation_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.confirmation
+    ADD CONSTRAINT confirmation_pkey PRIMARY KEY (rs_id, resr_id);
+
+
+--
+-- TOC entry 2989 (class 2606 OID 41019)
+-- Name: creditcard creditcard_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.creditcard
+    ADD CONSTRAINT creditcard_pkey PRIMARY KEY (cc_id);
+
+
+--
+-- TOC entry 2991 (class 2606 OID 41040)
+-- Name: creditcardnumber creditcardnumber_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.creditcardnumber
+    ADD CONSTRAINT creditcardnumber_pkey PRIMARY KEY (cc_number_id);
+
+
+--
+-- TOC entry 3007 (class 2606 OID 41129)
+-- Name: dryfood dryfood_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.dryfood
+    ADD CONSTRAINT dryfood_pkey PRIMARY KEY (df_id);
+
+
+--
+-- TOC entry 3011 (class 2606 OID 41155)
+-- Name: fuel fuel_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.fuel
+    ADD CONSTRAINT fuel_pkey PRIMARY KEY (fuel_id);
+
+
+--
+-- TOC entry 3015 (class 2606 OID 41182)
+-- Name: heavyequip heavyequip_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.heavyequip
+    ADD CONSTRAINT heavyequip_pkey PRIMARY KEY (heq_id);
+
+
+--
+-- TOC entry 3009 (class 2606 OID 41142)
+-- Name: ice ice_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.ice
+    ADD CONSTRAINT ice_pkey PRIMARY KEY (ice_id);
+
+
+--
+-- TOC entry 3029 (class 2606 OID 41304)
+-- Name: makes makes_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.makes
+    ADD CONSTRAINT makes_pkey PRIMARY KEY (c_id, rs_id);
+
+
+--
+-- TOC entry 3013 (class 2606 OID 41169)
+-- Name: medicaldevices medicaldevices_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.medicaldevices
+    ADD CONSTRAINT medicaldevices_pkey PRIMARY KEY (mdev_id);
+
+
+--
+-- TOC entry 3001 (class 2606 OID 41090)
+-- Name: medicine medicine_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.medicine
+    ADD CONSTRAINT medicine_pkey PRIMARY KEY (med_id);
+
+
+--
+-- TOC entry 2977 (class 2606 OID 24583)
+-- Name: parts parts_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.parts
+    ADD CONSTRAINT parts_pkey PRIMARY KEY (pid);
+
+
+--
+-- TOC entry 2983 (class 2606 OID 40980)
+-- Name: phone phone_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.phone
+    ADD CONSTRAINT phone_pkey PRIMARY KEY (phone_id);
+
+
+--
+-- TOC entry 3027 (class 2606 OID 41289)
+-- Name: places places_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.places
+    ADD CONSTRAINT places_pkey PRIMARY KEY (c_id, rq_id);
+
+
+--
+-- TOC entry 3021 (class 2606 OID 41221)
+-- Name: powergenerator powergenerator_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.powergenerator
+    ADD CONSTRAINT powergenerator_pkey PRIMARY KEY (pg_id);
+
+
+--
+-- TOC entry 3037 (class 2606 OID 41364)
+-- Name: provides provides_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.provides
+    ADD CONSTRAINT provides_pkey PRIMARY KEY (s_id, resr_id);
+
+
+--
+-- TOC entry 3033 (class 2606 OID 41334)
+-- Name: purchases purchases_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.purchases
+    ADD CONSTRAINT purchases_pkey PRIMARY KEY (rq_id, resr_id);
+
+
+--
+-- TOC entry 2993 (class 2606 OID 41053)
+-- Name: request request_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.request
+    ADD CONSTRAINT request_pkey PRIMARY KEY (rq_id);
+
+
+--
+-- TOC entry 2995 (class 2606 OID 41061)
+-- Name: reservation reservation_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.reservation
+    ADD CONSTRAINT reservation_pkey PRIMARY KEY (rs_id);
+
+
+--
+-- TOC entry 2997 (class 2606 OID 41069)
+-- Name: resources resources_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.resources
+    ADD CONSTRAINT resources_pkey PRIMARY KEY (resr_id);
+
+
+--
+-- TOC entry 2987 (class 2606 OID 41006)
+-- Name: supplier supplier_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.supplier
+    ADD CONSTRAINT supplier_pkey PRIMARY KEY (s_id);
+
+
+--
+-- TOC entry 2981 (class 2606 OID 40967)
+-- Name: sys_admin sys_admin_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.sys_admin
+    ADD CONSTRAINT sys_admin_pkey PRIMARY KEY (sa_id);
+
+
+--
+-- TOC entry 3017 (class 2606 OID 41195)
+-- Name: tools tools_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.tools
+    ADD CONSTRAINT tools_pkey PRIMARY KEY (tool_id);
+
+
+--
+-- TOC entry 3031 (class 2606 OID 41319)
+-- Name: transaction transaction_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.transaction
+    ADD CONSTRAINT transaction_pkey PRIMARY KEY (cc_id, rq_id);
+
+
+--
+-- TOC entry 2979 (class 2606 OID 32775)
+-- Name: usr usr_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.usr
+    ADD CONSTRAINT usr_pkey PRIMARY KEY (usr_id);
+
+
+--
+-- TOC entry 2999 (class 2606 OID 41077)
+-- Name: water water_pkey; Type: CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.water
+    ADD CONSTRAINT water_pkey PRIMARY KEY (h2o_id);
+
+
+--
+-- TOC entry 3057 (class 2606 OID 41245)
+-- Name: administrate administrate_sa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.administrate
+    ADD CONSTRAINT administrate_sa_id_fkey FOREIGN KEY (sa_id) REFERENCES public.sys_admin(sa_id);
+
+
+--
+-- TOC entry 3058 (class 2606 OID 41250)
+-- Name: administrate administrate_usr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.administrate
+    ADD CONSTRAINT administrate_usr_id_fkey FOREIGN KEY (usr_id) REFERENCES public.usr(usr_id);
+
+
+--
+-- TOC entry 3046 (class 2606 OID 41104)
+-- Name: babyfood babyfood_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.babyfood
+    ADD CONSTRAINT babyfood_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3056 (class 2606 OID 41235)
+-- Name: batteries batteries_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.batteries
+    ADD CONSTRAINT batteries_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3047 (class 2606 OID 41117)
+-- Name: cannedfood cannedfood_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.cannedfood
+    ADD CONSTRAINT cannedfood_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3040 (class 2606 OID 40994)
+-- Name: client client_usr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.client
+    ADD CONSTRAINT client_usr_id_fkey FOREIGN KEY (usr_id) REFERENCES public.usr(usr_id);
+
+
+--
+-- TOC entry 3054 (class 2606 OID 41209)
+-- Name: clothing clothing_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.clothing
+    ADD CONSTRAINT clothing_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3068 (class 2606 OID 41355)
+-- Name: confirmation confirmation_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.confirmation
+    ADD CONSTRAINT confirmation_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3067 (class 2606 OID 41350)
+-- Name: confirmation confirmation_rs_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.confirmation
+    ADD CONSTRAINT confirmation_rs_id_fkey FOREIGN KEY (rs_id) REFERENCES public.reservation(rs_id);
+
+
+--
+-- TOC entry 3042 (class 2606 OID 41020)
+-- Name: creditcard creditcard_c_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.creditcard
+    ADD CONSTRAINT creditcard_c_id_fkey FOREIGN KEY (c_id) REFERENCES public.client(c_id);
+
+
+--
+-- TOC entry 3043 (class 2606 OID 41041)
+-- Name: creditcardnumber creditcardnumber_cc_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.creditcardnumber
+    ADD CONSTRAINT creditcardnumber_cc_id_fkey FOREIGN KEY (cc_id) REFERENCES public.creditcard(cc_id);
+
+
+--
+-- TOC entry 3048 (class 2606 OID 41130)
+-- Name: dryfood dryfood_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.dryfood
+    ADD CONSTRAINT dryfood_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3050 (class 2606 OID 41156)
+-- Name: fuel fuel_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.fuel
+    ADD CONSTRAINT fuel_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3052 (class 2606 OID 41183)
+-- Name: heavyequip heavyequip_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.heavyequip
+    ADD CONSTRAINT heavyequip_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3049 (class 2606 OID 41143)
+-- Name: ice ice_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.ice
+    ADD CONSTRAINT ice_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3061 (class 2606 OID 41305)
+-- Name: makes makes_c_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.makes
+    ADD CONSTRAINT makes_c_id_fkey FOREIGN KEY (c_id) REFERENCES public.client(c_id);
+
+
+--
+-- TOC entry 3062 (class 2606 OID 41310)
+-- Name: makes makes_rs_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.makes
+    ADD CONSTRAINT makes_rs_id_fkey FOREIGN KEY (rs_id) REFERENCES public.reservation(rs_id);
+
+
+--
+-- TOC entry 3051 (class 2606 OID 41170)
+-- Name: medicaldevices medicaldevices_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.medicaldevices
+    ADD CONSTRAINT medicaldevices_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3045 (class 2606 OID 41091)
+-- Name: medicine medicine_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.medicine
+    ADD CONSTRAINT medicine_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3039 (class 2606 OID 40981)
+-- Name: phone phone_usr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.phone
+    ADD CONSTRAINT phone_usr_id_fkey FOREIGN KEY (usr_id) REFERENCES public.usr(usr_id);
+
+
+--
+-- TOC entry 3059 (class 2606 OID 41290)
+-- Name: places places_c_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.places
+    ADD CONSTRAINT places_c_id_fkey FOREIGN KEY (c_id) REFERENCES public.client(c_id);
+
+
+--
+-- TOC entry 3060 (class 2606 OID 41295)
+-- Name: places places_rq_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.places
+    ADD CONSTRAINT places_rq_id_fkey FOREIGN KEY (rq_id) REFERENCES public.request(rq_id);
+
+
+--
+-- TOC entry 3055 (class 2606 OID 41222)
+-- Name: powergenerator powergenerator_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.powergenerator
+    ADD CONSTRAINT powergenerator_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3070 (class 2606 OID 41370)
+-- Name: provides provides_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.provides
+    ADD CONSTRAINT provides_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3069 (class 2606 OID 41365)
+-- Name: provides provides_s_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.provides
+    ADD CONSTRAINT provides_s_id_fkey FOREIGN KEY (s_id) REFERENCES public.supplier(s_id);
+
+
+--
+-- TOC entry 3066 (class 2606 OID 41340)
+-- Name: purchases purchases_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.purchases
+    ADD CONSTRAINT purchases_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3065 (class 2606 OID 41335)
+-- Name: purchases purchases_rq_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.purchases
+    ADD CONSTRAINT purchases_rq_id_fkey FOREIGN KEY (rq_id) REFERENCES public.request(rq_id);
+
+
+--
+-- TOC entry 3041 (class 2606 OID 41007)
+-- Name: supplier supplier_usr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.supplier
+    ADD CONSTRAINT supplier_usr_id_fkey FOREIGN KEY (usr_id) REFERENCES public.usr(usr_id);
+
+
+--
+-- TOC entry 3038 (class 2606 OID 40968)
+-- Name: sys_admin sys_admin_usr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.sys_admin
+    ADD CONSTRAINT sys_admin_usr_id_fkey FOREIGN KEY (usr_id) REFERENCES public.usr(usr_id);
+
+
+--
+-- TOC entry 3053 (class 2606 OID 41196)
+-- Name: tools tools_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.tools
+    ADD CONSTRAINT tools_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+--
+-- TOC entry 3063 (class 2606 OID 41320)
+-- Name: transaction transaction_cc_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.transaction
+    ADD CONSTRAINT transaction_cc_id_fkey FOREIGN KEY (cc_id) REFERENCES public.creditcard(cc_id);
+
+
+--
+-- TOC entry 3064 (class 2606 OID 41325)
+-- Name: transaction transaction_rq_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.transaction
+    ADD CONSTRAINT transaction_rq_id_fkey FOREIGN KEY (rq_id) REFERENCES public.request(rq_id);
+
+
+--
+-- TOC entry 3044 (class 2606 OID 41078)
+-- Name: water water_resr_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: appusr
+--
+
+ALTER TABLE ONLY public.water
+    ADD CONSTRAINT water_resr_id_fkey FOREIGN KEY (resr_id) REFERENCES public.resources(resr_id);
+
+
+-- Completed on 2020-05-05 19:58:23 AST
+
+--
+-- PostgreSQL database dump complete
+--
+
