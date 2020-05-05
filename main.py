@@ -34,7 +34,6 @@ def greeting():
     return 'Hello this is Edwin, Edgar and Fabian`s DB App!'
 
 
-#Users
 @app.route('/DBApp/users', methods=['GET', 'POST'])
 def getAllUsr():
     if request.method == 'POST':
@@ -208,7 +207,6 @@ def getResourcesById(resr_id):
     else:
         return jsonify(Error="Method not allowed."), 405
 
-
 @app.route('/DBApp/resources/requested', methods=['GET'])
 def getResourcesRequested():
     if not request.args:
@@ -240,8 +238,7 @@ def getResourcesAvailable():
     if not request.args:
         return ResourcesHandler().getResourcesAvailable()
     else:
-        return ResourcesHandler().searchResource(request.args)
-    
+        return ResourcesHandler().searchAvailable(request.args)
 
 @app.route('/DBApp/resources/supplier/<int:s_id>', methods=['GET'])
 def getReasourcesBySupplierId(s_id):
@@ -598,5 +595,5 @@ def getWaterById(h2O_id):
         return jsonify(Error="Method not allowed."), 405
 
 
-if __name__ == '_main__':
+if __name__ == '__main__':
     app.run()
