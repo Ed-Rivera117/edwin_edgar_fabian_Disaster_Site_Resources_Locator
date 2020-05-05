@@ -1,7 +1,6 @@
 from flask import jsonify
 from dao.resources import ResourcesDAO
 
-
 class ResourcesHandler:
 
     def build_resr_dict(self, row):
@@ -40,7 +39,7 @@ class ResourcesHandler:
             sa = self.build_resr_dict(row)
         return jsonify(Resource=sa)
 
-       def getResourceByRequestId(self, rq_id):
+    def getResourceByRequestId(self, rq_id):
         dao = ResourcesDAO()
         resr_list = dao.getResourcesByRequest(rq_id)
         result_list = []
@@ -66,6 +65,22 @@ class ResourcesHandler:
             result = self.build_resr_dict(row)
             result_list.append(result)
         return jsonify(Resource=result_list)
+        #if not row:
+         #   return jsonify(Error="Resource not found"), 404
+        #else:
+         #   sa = self.build_resr_dict(row)
+        #return jsonify(Resource=sa)
+
+    def getResourceBySupplierId(self, s_id):
+        dao = ResourcesDAO()
+        resr_list = dao.getResourcesBySupplier(s_id)
+        result_list = []
+        if not resr_list:
+                return jsonify(Error = "Resource not found"), 404
+        for row in resr_list:
+            result = self.build_resr_dict(row)
+            result_list.append(result)
+        return jsonify(Resource=result_list)
 
     def getResourcesRequested(self):
         dao = ResourcesDAO()
@@ -84,7 +99,7 @@ class ResourcesHandler:
             result = self.build_resr_dict(row)
             result_list.append(result)
         return jsonify(Resource=result_list)
-    
+
     def getResourcesAvailable(self):
         dao = ResourcesDAO()
         resr_list = dao.getResourcesAvailable()
@@ -93,18 +108,30 @@ class ResourcesHandler:
             result = self.build_resr_dict(row)
             result_list.append(result)
         return jsonify(Resource=result_list)
-    
-    def getResourceBySupplierId(self, s_id):
-        dao = ResourcesDAO()
-        resr_list = dao.getResourcesBySupplier(s_id)
-        result_list = []
-        if not resr_list:
-            return jsonify(Error = "Resource not found"), 404
-        for row in resr_list:
-            result = self.build_resr_dict(row)
-            result_list.append(result)
-        return jsonify(Resource=result_list)
-    
+
+    def searchAvailable(self,args):
+        if len(args) > 1:
+            return jsonify(Error="Malformed search string"), 400
+        else:
+            location = args.get("location")
+            category = args.get("category")
+            if location:
+                dao = ResourcesDAO()
+                resr_list = dao.getResourceAvailableByLocation(location)
+                result_list = []
+                for row in resr_list:
+                    result = self.build_resr_dict(row)
+                    result_list.append(result)
+                return jsonify(Resource=result_list)
+            elif category:
+                dao = ResourcesDAO()
+                resr_list = dao.getResourceAvailableByCategory(category)
+                result_list = []
+                for row in resr_list:
+                    result = self.build_resr_dict(row)
+                    result_list.append(result)
+                return jsonify(Resource=result_list)
+
 
     def searchResource(self, args):
         if len(args) > 1:
@@ -117,7 +144,7 @@ class ResourcesHandler:
             available = args.get("available")
             if location:
                 dao = ResourcesDAO()
-                resr_list = dao.getResourceByLocation(location)
+                resr_list = dao.getResourceReservedByLocation(location)
                 result_list = []
                 for row in resr_list:
                     result = self.build_resr_dict(row)
@@ -125,7 +152,7 @@ class ResourcesHandler:
                 return jsonify(Resource=result_list)
             elif category:
                 dao = ResourcesDAO()
-                resr_list = dao.getResourceByCategory(category)
+                resr_list = dao.getResourceReservedByCategory(category)
                 result_list = []
                 for row in resr_list:
                     result = self.build_resr_dict(row)
@@ -199,3 +226,4 @@ class ResourcesHandler:
                     return jsonify(Resource=result), 200
                 else:
                     return jsonify(Error="Unexpected attributes in update request"), 400
+
