@@ -36,9 +36,61 @@ class ResourcesDAO:
             result.append(row)
         return result
 
+    def getResourceReservedByLocation(self, resr_location):
+        cursor = self.conn.cursor()
+        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Confirmation natural inner join reservation " \
+                "where resr_location = %s;"
+        cursor.execute(query, (resr_location,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getResourceAvailableByLocation(self, resr_location):
+        cursor = self.conn.cursor()
+        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources " \
+                "where stock > 0 and resr_location = %s" \
+                "except select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Purchases natural inner join request " \
+                "except select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Confirmation natural inner join reservation;"
+        cursor.execute(query, (resr_location,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
     def getResourceByCategory(self, resr_category):
         cursor = self.conn.cursor()
         query = "select * from resources where resr_category = %s;"
+        cursor.execute(query, (resr_category,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getResourceReservedByCategory(self, resr_category):
+        cursor = self.conn.cursor()
+        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Confirmation natural inner join reservation " \
+                "where resr_category = %s;"
+        cursor.execute(query, (resr_category,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getResourceAvailableByCategory(self, resr_category):
+        cursor = self.conn.cursor()
+        query = "select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources " \
+                "where stock > 0 and resr_category = %s" \
+                "except select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Purchases natural inner join request " \
+                "except select resr_id, resr_price, resr_location, resr_category, stock " \
+                "from resources natural inner join Confirmation natural inner join reservation;"
         cursor.execute(query, (resr_category,))
         result = []
         for row in cursor:
@@ -78,7 +130,8 @@ class ResourcesDAO:
     def getResourcesReserved(self):
         cursor = self.conn.cursor()
         query = "select resr_id, resr_price, resr_location, resr_category, stock " \
-                "from resources natural inner join Confirmation natural inner join reservation;"
+                "from resources natural inner join Confirmation natural inner join reservation where confirmation_status = 'confirmed';"
+
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -114,7 +167,7 @@ class ResourcesDAO:
                 "where stock > 0 " \
                 "except select resr_id, resr_price, resr_location, resr_category, stock " \
                 "from resources natural inner join Purchases natural inner join request " \
-                "UNION select resr_id, resr_price, resr_location, resr_category, stock " \
+                "except select resr_id, resr_price, resr_location, resr_category, stock " \
                 "from resources natural inner join Confirmation natural inner join reservation;"
         cursor.execute(query)
         result = []
@@ -129,7 +182,7 @@ class ResourcesDAO:
                 "where stock > 0 " \
                 "except select resr_id, resr_price, resr_location, resr_category, stock " \
                 "from resources natural inner join Purchases natural inner join request " \
-                "UNION select resr_id, resr_price, resr_location, resr_category, stock " \
+                "except select resr_id, resr_price, resr_location, resr_category, stock " \
                 "from resources natural inner join Confirmation natural inner join reservation" \
                 "order by resr_category;"
         cursor.execute(query)
