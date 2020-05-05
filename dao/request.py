@@ -27,6 +27,15 @@ class RequestDAO:
         result = cursor.fetchone()
         return result
 
+    def getRequestByUsrId(self, usr_id):
+        cursor = self.conn.cursor()
+        query = "select rq_id, rq_date " \
+                "from request natural inner join Places natural inner join client " \
+                "where usr_id = %s;"
+        cursor.execute(query, (usr_id,))
+        result = cursor.fetchone()
+        return result
+
     def getRequestByDate(self, rq_date):
         cursor = self.conn.cursor()
         query = "select * from request where rq_date = %s;"

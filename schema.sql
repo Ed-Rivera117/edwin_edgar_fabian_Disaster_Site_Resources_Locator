@@ -86,7 +86,7 @@ create table Transaction(cc_id integer references creditcard(cc_id), rq_id integ
 create table Purchases(rq_id integer references request(rq_id),  resr_id integer references resources(resr_id), purchase_price float, quantity integer, primary key (rq_id,resr_id));
 
 --Confirmation
-create table Confirmation(rs_id integer references reservation(rs_id), resr_id integer references resources(resr_id), confirmation_status varchar(20), primary key (rs_id,resr_id));
+create table Confirmation(rs_id integer references reservation(rs_id), resr_id integer references resources(resr_id), confirmation_status varchar(20), quantity integer, primary key (rs_id,resr_id));
 
 --Provides
 create table Provides(s_id integer references supplier(s_id), resr_id integer references resources(resr_id), primary key (s_id,resr_id));

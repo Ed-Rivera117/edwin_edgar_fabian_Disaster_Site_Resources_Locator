@@ -34,6 +34,15 @@ class RequestHandler:
             rq = self.build_rq_dict(row)
         return jsonify(Request=rq)
 
+    def getRequestByUsrId(self, usr_id):
+        dao = RequestDAO()
+        row = dao.getRequestByUsrId(usr_id)
+        if not row:
+            return jsonify(Error="Request not found"), 404
+        else:
+            rq = self.build_rq_dict(row)
+        return jsonify(Request=row)
+
     def searchRequest(self, args):
         if len(args) > 1:
             return jsonify(Error="Malformed search string"), 400
